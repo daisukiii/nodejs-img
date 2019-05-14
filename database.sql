@@ -27,16 +27,16 @@ create table `users`(
     `username` varchar(50) NOT NULL,
     `email` varchar(50) NOT NULL,
     `pass` varchar(50) NOT NULL,
-    `images_url` varchar(100) NOT NULL,
+    `images_url` varchar(500) NOT NULL,
     PRIMARY KEY (`id`)
 );
 
 DROP TABLE IF EXISTS `photos`;
 create table `photos`(
     `id` int(11) NOT NULL AUTO_INCREMENT,
-    `title` varchar(100),
+    `title` varchar(500),
     `id_user` int(11),
-    `images_url` varchar(100) NOT NULL,
+    `images_url` varchar(500) NOT NULL,
     PRIMARY KEY (`id`)
 );
 
@@ -44,16 +44,16 @@ DROP TABLE IF EXISTS `status_photos`;
 create table `status_photos`(
     `id` int(11)  NOT NULL AUTO_INCREMENT,
     `id_photo` int(11),
-    `cmt` varchar(100),
-    `likes` varchar(50),
+    `cmt` varchar(500),
+    `likes` varchar(500),
     PRIMARY KEY (`id`)
 );
 
 DROP TABLE IF EXISTS `photos_any`;
 create table `photos_any`(
     `id` int(11) NOT NULL AUTO_INCREMENT,
-    `title` varchar(100),
-    `images_url` varchar(100) NOT NULL,
+    `title` varchar(500),
+    `images_url` varchar(500) NOT NULL,
     PRIMARY KEY (`id`)
 );
 
