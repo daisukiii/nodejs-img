@@ -93,6 +93,13 @@ input:hover {
     object-fit: cover;
 }
 
+.box-icon-profile {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
 .ds-username-title {
     font-size: 20px;
     color: rgb(29, 29, 29);
@@ -263,6 +270,73 @@ body {
     box-shadow: 0 4px 7px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
+.ds-post {
+    /* left: 0;
+    bottom: 65%; */
+    /* width: 100%; */
+    /* height: auto; */
+    /* max-height: 100px; */
+    color: white;
+    z-index: 1;
+}
+.ds-post>button {
+    /* position: fixed; */
+    right: 10px;
+    background: #03A9F4;
+    padding: 10px 16px;
+    width: 100%;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 14px;
+    color: #fff;
+    line-height: 16px;
+    letter-spacing: 0.5px;
+    border-radius: 2px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.1);
+    border: 0;
+    outline: 0;
+    /* margin: 15px 15px 15px 0; */
+    transition: all 0.25s;
+}
+
+.ds-post>button:hover {
+    background: #0288D1;
+    box-shadow: 0 4px 7px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+/* */
+.ds-post1 {
+    /* left: 0;
+    bottom: 65%; */
+    /* width: 100%; */
+    /* height: auto; */
+    /* max-height: 100px; */
+    color: white;
+    z-index: 1;
+}
+.ds-post1>button {
+    /* position: fixed; */
+    right: 10px;
+    background: rgb(151, 150, 144);
+    padding: 10px 16px;
+    width: 100%;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 14px;
+    color: #fff;
+    line-height: 16px;
+    letter-spacing: 0.5px;
+    border-radius: 2px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.1);
+    border: 0;
+    outline: 0;
+    /* margin: 15px 15px 15px 0; */
+    transition: all 0.25s;
+}
+
+.ds-post1>button:hover {
+    background: rgb(194, 130, 236);
+    box-shadow: 0 4px 7px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.1);
+}
 /* button back to top */
 
 #button {
