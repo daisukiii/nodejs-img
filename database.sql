@@ -1,8 +1,8 @@
-DROP DATABASE IF EXISTS `images`;/*i hope you, dont use it*/
+DROP DATABASE IF EXISTS `nodejsimages`;/*i hope you, dont use it*/
 
-create database `images`;
+create database `nodejsimages`;
 
-use `images`;
+use `nodejsimages`;
 
 DROP TABLE IF EXISTS `admins`;
 create table `admins`(
@@ -27,7 +27,9 @@ create table `users`(
     `username` varchar(50) NOT NULL,
     `email` varchar(50) NOT NULL,
     `pass` varchar(50) NOT NULL,
-    `images_url` varchar(500) NOT NULL,
+    `status_user` int(11),
+    `point_user` int(11),
+    `avatar_url` varchar(500),
     PRIMARY KEY (`id`)
 );
 
@@ -36,6 +38,7 @@ create table `photos`(
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `title` varchar(500),
     `id_user` int(11),
+    `status_photo` int(11),
     `images_url` varchar(500) NOT NULL,
     PRIMARY KEY (`id`)
 );
@@ -53,6 +56,7 @@ DROP TABLE IF EXISTS `photos_any`;
 create table `photos_any`(
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `title` varchar(500),
+    `status_photo_any` int(11),
     `images_url` varchar(500) NOT NULL,
     PRIMARY KEY (`id`)
 );
