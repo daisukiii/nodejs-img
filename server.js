@@ -21,7 +21,7 @@ var connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'images'
+    database: 'nodejsimages'
 });
 
 connection.connect(function (err) {
