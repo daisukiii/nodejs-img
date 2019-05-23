@@ -39,6 +39,7 @@ create table `photos`(
     `title` varchar(500),
     `id_user` int(11),
     `status_photo` int(11),
+    `images_description` varchar(500),
     `images_url` varchar(500) NOT NULL,
     PRIMARY KEY (`id`)
 );
