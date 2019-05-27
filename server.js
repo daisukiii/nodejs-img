@@ -1,5 +1,4 @@
-var http = require('http')
-    , express = require('express')
+var  express = require('express')
     , user = require('./routes/user')
     , routes = require('./routes/index')
     , path = require('path');
@@ -36,6 +35,8 @@ app.set('views', __dirname + '/views');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/login', express.static(path.join(__dirname, 'public')));
+app.use('/home', express.static(path.join(__dirname, 'public')));
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
@@ -49,8 +50,10 @@ app.get('/register', user.signup);//call for signup page
 app.post('/register', user.signup);//call for signup post 
 app.get('/login', routes.index);//call for login page
 app.post('/login', user.login);//call for login post
+app.get('/login/register', user.signup);//call for signup page
 app.get('/home/profile', user.profile);//to render users profile
 app.get('/home/logout', user.logout);//call for logout
+app.get('/home', user.home);//call for logout
 
 // ! Middleware
 app.listen(`${port}`, () => {

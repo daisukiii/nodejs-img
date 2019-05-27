@@ -11,7 +11,7 @@ exports.signup = function (req, res) {
         console.log(`${name}///${pass}///${email}`);
         var sql_check = "SELECT * FROM `users` WHERE `username` = '" + name + "'";
         var sql_check_e = "SELECT * FROM `users` WHERE `email` = '" + email + "'";
-        var sql = "INSERT INTO `users`(`username`,`email`,`pass`) VALUES ('" + name + "','" + email + "','" + pass + "')";
+        var sql = "INSERT INTO `users`(`username`,`email`,`pass`,`status_user`,`point_user`) VALUES ('" + name + "','" + email + "','" + pass + "','0','0')";
         // ! just for debug - 2 rows
         console.log(sql);
         console.log(sql_check);
@@ -27,11 +27,15 @@ exports.signup = function (req, res) {
             // TODO: check user
             if (result.length > 0) {
                 message = "This username is already taken";
+                // ! for debug, insert more value
+                sql='';
                 res.render('register/index.ejs', { message: message });
             }
             // TODO: check email
             else if (result_email.length > 0) {
                 message_e = "This email is already taken";
+                 // ! for debug, insert more value
+                sql='';
                 res.render('register/index.ejs', { message_e: message_e });
             }
             //TODO: if anything true, insert to datebase
@@ -42,7 +46,7 @@ exports.signup = function (req, res) {
                 });
             }
         });
-    } 
+    }
     else {
         res.render('register/index.ejs');
     }
@@ -65,7 +69,7 @@ exports.login = function (req, res) {
                 req.session.user = results[0];
                 //TODO: just for debug
                 console.log(results[0].id);
-                res.redirect('/home/profile');
+                res.redirect('/home/');
             }
             else {
                 message = 'Email or username not correct.';
@@ -78,23 +82,6 @@ exports.login = function (req, res) {
     }
 };
 
-//TODO: after login
-exports.dashboard = function (req, res, next) {
-
-    var user = req.session.user,
-        userId = req.session.userId;
-    console.log('ddd=' + userId);
-    if (userId == null) {
-        res.redirect("/login");
-        return;
-    }
-
-    var sql = "SELECT * FROM `users` WHERE `id`='" + userId + "'";
-
-    db.query(sql, function (err, results) {
-        res.render('dashboard.ejs', { user: user });
-    });
-};
 //TODO: logout functionality
 exports.logout = function (req, res) {
     req.session.destroy(function (err) {
@@ -103,16 +90,29 @@ exports.logout = function (req, res) {
 };
 
 //TODO: show profile
-exports.profile = function(req, res){
-
+//TODO: after login
+exports.profile = function (req, res) {
     var userId = req.session.userId;
-    if(userId == null){
-       res.redirect("/login");
-       return;
+    if (userId == null) {
+        res.redirect("/login");
+        return;
     }
- 
-    var sql="SELECT * FROM `users` WHERE `id`='"+userId+"'";          
-    db.query(sql, function(err, result){  
-       res.render('profile.ejs',{data:result});
+
+    var sql = "SELECT * FROM `users` WHERE `id`='" + userId + "'";
+    db.query(sql, function (err, result) {
+        res.render('profile.ejs', { data: result });
     });
- };
+};
+//TODO: show username on home page
+exports.home = function (req, res) {
+    var userId = req.session.userId;
+    if (userId == null) {
+        res.redirect("/login");
+        return;
+    }
+
+    var sql = "SELECT * FROM `users` WHERE `id`='" + userId + "'";
+    db.query(sql, function (err, result) {
+        res.render('home/index.ejs', { data: result });
+    });
+};
