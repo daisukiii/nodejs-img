@@ -71,12 +71,24 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="nav navbar-nav ml-auto">
+                <!--TODO: show name on navbar -->
+                <% if(data.length>0){ %>
                 <li class="ds-hover nav-item text-white">
-                    <a class="nav-link pl-1" href="#"><%=data[0].username%>Login</a>
+                    <a class="nav-link pl-1" href="../home/profile">Hello: <%=data%></a>
                 </li>
                 <li class="ds-hover nav-item text-white">
-                    <a class="nav-link" href="#">Create a account</a>
+                    <a class="nav-link" href="../home/logout">Logout</a>
                 </li>
+                <% } else{ %>
+                <li class="ds-hover nav-item text-white">
+                    <a class="nav-link pl-1" href="../login">Login</a>
+                </li>
+                <li class="ds-hover nav-item text-white">
+                    <a class="nav-link" href="../register">Create a account</a>
+                </li>
+                <% } %>
+
+
             </ul>
         </div>
     </nav>
@@ -594,7 +606,8 @@
     </footer>
     <!--TODO: That's button upload-->
     <div class="ds-upload position-fixed">
-        <button class="" id="login" type="" onclick="location.href='/upload';"> <img src="images/photo.png" alt="" srcset=""> Upload</button>
+        <button class="" id="login" type="" onclick="location.href='/upload';"> <img src="images/photo.png" alt=""
+                srcset=""> Upload</button>
     </div>
 
     <!--JS-->

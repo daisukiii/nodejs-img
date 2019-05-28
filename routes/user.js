@@ -28,14 +28,14 @@ exports.signup = function (req, res) {
             if (result.length > 0) {
                 message = "This username is already taken";
                 // ! for debug, insert more value
-                sql='';
+                sql = '';
                 res.render('register/index.ejs', { message: message });
             }
             // TODO: check email
             else if (result_email.length > 0) {
                 message_e = "This email is already taken";
-                 // ! for debug, insert more value
-                sql='';
+                // ! for debug, insert more value
+                sql = '';
                 res.render('register/index.ejs', { message_e: message_e });
             }
             //TODO: if anything true, insert to datebase
@@ -48,7 +48,7 @@ exports.signup = function (req, res) {
         });
     }
     else {
-        res.render('register/index.ejs');
+        res.render('register');
     }
 };
 
@@ -66,10 +66,11 @@ exports.login = function (req, res) {
         db.query(sql, function (err, results) {
             if (results.length) {
                 req.session.userId = results[0].id;
-                req.session.user = results[0];
+                req.session.username = results[0].username;
                 //TODO: just for debug
                 console.log(results[0].id);
-                res.redirect('/home/');
+                console.log(results[0].username);
+                res.redirect('home');
             }
             else {
                 message = 'Email or username not correct.';
@@ -85,7 +86,7 @@ exports.login = function (req, res) {
 //TODO: logout functionality
 exports.logout = function (req, res) {
     req.session.destroy(function (err) {
-        res.redirect("/login");
+        res.redirect("../login");
     })
 };
 
@@ -94,7 +95,7 @@ exports.logout = function (req, res) {
 exports.profile = function (req, res) {
     var userId = req.session.userId;
     if (userId == null) {
-        res.redirect("/login");
+        res.redirect("login");
         return;
     }
 
@@ -104,15 +105,39 @@ exports.profile = function (req, res) {
     });
 };
 //TODO: show username on home page
+// ! just for home page
 exports.home = function (req, res) {
-    var userId = req.session.userId;
-    if (userId == null) {
-        res.redirect("/login");
+    var username = req.session.username;
+    if (username == null) {
+        res.redirect("../login");
         return;
     }
-
-    var sql = "SELECT * FROM `users` WHERE `id`='" + userId + "'";
-    db.query(sql, function (err, result) {
-        res.render('home/index.ejs', { data: result });
-    });
+    else {
+        res.render('home/index.ejs', { data: username });
+    }
 };
+
+// TODO: without login
+exports.homenotlogin = function (req, res) {
+    var result = '';
+    res.render('home/index.ejs', { data: result });
+};
+
+//TODO: upload image to server
+exports.upload = function (req, res) {
+    var userId = req.session.userId;
+    var username = req.session.username;
+    if (userId == null) {
+        //TODO: upload image without login
+        var data_username = '';
+        res.render('home/upload.ejs', {
+            data_username: data_username
+        });
+    } else {
+        //TODO: upload image with login
+        res.render('home/upload.ejs', {
+            data_username: username
+        });
+    }
+    //TODO: just for POST
+}
