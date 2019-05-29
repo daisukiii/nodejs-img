@@ -40,11 +40,13 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/login', express.static(path.join(__dirname, 'public')));
 app.use('/home', express.static(path.join(__dirname, 'public')));
+app.use('/u', express.static(path.join(__dirname, 'public')));
+app.use('/i', express.static(path.join(__dirname, 'public')));
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: true,
-    cookie: { maxAge: 60000 }
+    cookie: { maxAge: 18000000 }// ! auto delete after 5 hour
 }))
 
 
@@ -99,32 +101,145 @@ app.get('/home/logout', user.logout);// ? call for logout
 app.get('/home', user.home);// ? call for login
 app.get('/home-page', user.homenotlogin);// ? call for without login
 app.get('/upload', user.upload);// ? call for page upload
+
 // ? call for upload image
 app.post('/upload', (req, res) => {
     upload(req, res, (err) => {
         // ! this line for debug
         console.log(req.file.filename);
         var userId = req.session.userId;
-        //var username = req.session.username;
+        // ? var username = req.session.username;
+        var post = req.body;
+        var title = post.title;
+        var description = post.description;
         if (req.method == "POST") {
             if (userId == null) {// ? true-done
-                var post = req.body;
-                var title = post.title;
-                var description = post.description;
-                var sql = "INSERT INTO `photos_any`(`title`,`status_photo_any`,`images_url`,`images_description`) VALUES ('" + title + "','1','" + req.file.filename + "','" + description + "')";
-                console.log(sql);
-                var query_insert = db.query(sql, function (err, result) {
-                    var url = `uploads/${req.file.filename}`;
-                    res.redirect(url);
+                var sql_photos_any = "INSERT INTO `photos_any` (`title`,`status_photo_any`,`images_url`,`images_description`) VALUES ('" + title + "','1','" + req.file.filename + "','" + description + "')";
+                console.log(sql_photos_any); // TODO: just for debug
+                db.query(sql_photos_any, function (err, result) {
+                    db.query("SELECT * FROM `photos_any` WHERE `images_url` = '" + req.file.filename + "'", function (err, result) {
+                        var url = `i/${result[0].id}`;
+                        res.redirect(url);
+                    });
                 });
 
             } else {
-                res.redirect('/home');
+                var sql_photos = "INSERT INTO `photos` (`title`,`id_user`,`status_photo`,`images_description`,`images_url`) VALUES ('" + title + "','" + userId + "','0','" + description + "','" + req.file.filename + "')";
+                console.log(sql_photos); // TODO: just for debug
+                db.query(sql_photos, function (err, result) {
+                    sql_photos_redirect = "SELECT * FROM `photos` WHERE `images_url` = '" + req.file.filename + "'";
+                    db.query(sql_photos_redirect, function (err, result) {
+                        var url = `u/${result[0].id}`;
+                        res.redirect(url);
+                    });
+                });
             }
         }
     });
 });
 
+// ?  after upload image with login
+app.get('/u/:id', async (req, res) => {
+    var title = '',
+        img_description = '',
+        username = '',
+        img_url = '';
+    var username_nav = req.session.username;
+    if (username_nav == null) {
+        username_nav = '';
+    }
+    // var sql2 = "SELECT * FROM `users` WHERE `id` = (SELECT `id_user` FROM `photos` WHERE `id` = '" + id + "')";
+    // console.log(sql2);// ! only for debug
+    // var ex_query = db.query(sql2, function (err, result) {
+    //     return result[0].username;
+    // });
+    var id = req.params.id;
+    var sql = "SELECT * FROM photos WHERE id = " + id + "";
+    console.log(sql);// ! only for debug
+    db.query(sql, async function (err, result) {
+        if (err) throw err;
+        // ! just for debug
+        console.log(result);
+        console.log(result[0].images_url);
+        title = result[0].title;
+        img_description = result[0].images_description;
+        //img_url = '<img class="card-img-top img-fluid" src="';
+        img_url += 'uploads/';
+        img_url += result[0].images_url;
+        //img_url += '"  alt="Card image cap"></img>';
+        db.query("SELECT * FROM users WHERE id=" + result[0].id_user + "", async function (err, result) {
+            if (err) throw err;
+            console.log(result);
+            username = result[0].username;
+            id_username = result[0].id;
+            db.query("SELECT * FROM photos ORDER BY id DESC LIMIT 10", async function (err, result) {
+                if (err) throw err;
+                await res.render('home/newsfeed.ejs', {
+                    username: username,
+                    id_username: id_username,
+                    title: title,
+                    img_description: img_description,
+                    img_url: img_url,
+                    username_nav: username_nav,
+                    data: result
+                });
+            });
+
+        })
+    });
+});
+
+// ? after upload image whitout login
+app.get('/i/:id', async (req, res) => {
+    var title = '',
+        img_description = '',
+        username = 'Anonymous',
+        img_url = '',
+        id_username = '';
+    var username_nav = req.session.username;
+    if (username_nav == null) {
+        username_nav = '';
+    }
+    var id = req.params.id;
+    db.query("SELECT * FROM photos_any WHERE id= " + id + "", async function (err, result) {
+        if (err) throw err;
+        title = result[0].title;
+        img_description = result[0].images_description;
+        img_url += 'uploads/';
+        img_url += result[0].images_url;
+        db.query("SELECT * FROM photos ORDER BY id DESC LIMIT 10", async function (err, result) {
+            if (err) throw err;
+            await res.render('home/newsfeed.ejs', {
+                username: username,
+                id_username: id_username,
+                title: title,
+                img_description: img_description,
+                img_url: img_url,
+                username_nav: username_nav,
+                data: result
+            });
+        });
+    })
+});
+
+// ? profile user, show all image for user
+app.get('/p/:id', (req, res) => {
+    
+});
+// ? just for test get data from url
+app.get('/test/:id', (req, res) => {
+    /*
+    On express 3
+    !    req.param(fieldName)
+    On express 4
+    !    req.params.fieldName
+    */
+    var id = req.params.id;
+    console.log(id);
+    res.render('test.ejs', {
+        data: id
+    });
+});
 // ! Middleware
 app.listen(`${port}`, () => {
     console.log(`App running in http://${hostname}:${port}`);
