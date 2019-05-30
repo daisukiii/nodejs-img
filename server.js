@@ -6,7 +6,7 @@ var express = require('express')
 
 
 var session = require('express-session');
-global.app = express();
+var app = express();
 var bodyParser = require('body-parser');
 var mysql = require('mysql');
 var ejsEngine = require("ejs-locals");
