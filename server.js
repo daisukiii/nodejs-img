@@ -2,6 +2,7 @@ var http = require('http')
     , express = require('express')
     , user = require('./routes/user')
     , routes = require('./routes/index')
+    , admin1 = require('./routes/admin1/admin1')
     , path = require('path');
 
 var session = require('express-session');
@@ -21,7 +22,7 @@ var connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'images'
+    database: 'nodejsimages'
 });
 
 connection.connect(function (err) {
@@ -36,6 +37,7 @@ app.set('views', __dirname + '/views');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use("/static",express.static(__dirname+"/public"));
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
@@ -51,6 +53,13 @@ app.get('/login', routes.index);//call for login page
 app.post('/login', user.login);//call for login post
 app.get('/home/profile', user.profile);//to render users profile
 app.get('/home/logout', user.logout);//call for logout
+
+//Bao
+app.get('/admin/listPhotoDelete',admin1.photo_0); //ảnh đã xóa
+app.get('/admin/listPHOTO',admin1.photo_1); //ảnh đã duyệt 
+app.post('/admin/listPHOTO',admin1.xoa_photo);
+app.get('/admin/listPhotoWait',admin1.photo_2); //ảnh chưa duyệt
+
 
 // ! Middleware
 app.listen(`${port}`, () => {

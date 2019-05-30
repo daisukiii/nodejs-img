@@ -5,7 +5,7 @@
 	<link rel="icon" type="image/png" href="assets/img/favicon.ico">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>Danh sách Ảnh đã duyệt</title>
+	<title>Danh sách Ảnh chưa duyệt</title>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -93,24 +93,24 @@
                     <p>Thông tin Admin</p>
                 </a>
             </li>
-            <li class="active">
+            <li>
                     <a href="/admin/listPhoto">
                         <i class="pe-7s-note2"></i>
                         <p>Danh sách Ảnh</p>
                     </a>
                 </li>
-                <li >
-                    <a href="/admin/listPhotoWait">
-                        <i class="pe-7s-note2"></i>
-                        <p>Danh sách Ảnh chờ</p>
-                    </a>
-                </li>
-                <li >
-                        <a href="/admin/listPhotoDelete">
+                <li class="active">
+                        <a href="/admin/listPhotoWait">
                             <i class="pe-7s-note2"></i>
-                            <p>Danh sách Ảnh đã xóa</p>
+                            <p>Danh sách Ảnh chờ</p>
                         </a>
                     </li>
+                    <li >
+                            <a href="/admin/listPhotoDelete">
+                                <i class="pe-7s-note2"></i>
+                                <p>Danh sách Ảnh đã xóa</p>
+                            </a>
+                        </li>
             <li>
                 <a href="thongbao.html">
                     <i class="pe-7s-bell"></i>
@@ -210,11 +210,11 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-12">
+                        <div class="col-md-12">
                             <div class="card">
                                 <div class="header">
                                     <div class="col-md-12">
-                                        <h4 class="title">Danh sách Ảnh đã kiểm duyệt</h4>
+                                        <h4 class="title">Danh sách Ảnh chưa được kiểm duyệt</h4>
                                         <p class="category">Cập nhật 3 phút trước</p>
                                         </div>
                                         
@@ -222,29 +222,31 @@
                                 <div class="content table-responsive table-full-width">
                                     
                                     <table class="table table-hover table-striped">
-                                            <thead>
-                                                <th>ID</th>
-                                                <th>Tiêu đề</th>
-                                                <th>ID User</th>
-                                                <th>Trạng thái</th>
-                                                <th>Mô tả</th>
-                                                <th>URL</th>
-                                                <th>...</th>
-                                            </thead>
-                                            <tbody>
-                                                    <% data.forEach(function(row){ %>
-                                                        <tr>
-                                                            <td><%= row.id %></td>
-                                                            <td><%= row.title %></td>
-                                                            <td><%= row.id_user %></td>
-                                                            <td><%= row.status_photo %> </td>
-                                                            <td><%= row.images_description%></td>
-                                                            <td><a  href=""><%= row.images_url %></a></td>
-                                                            <td><a href="/admin/listPhoto/?id=<%= row.id %>"" onclick="return confirm('Bạn muốn xóa ?')">Xóa</a></td>
-                                                            </tr>
-                                                    <% }); %> 
-                                            </tbody>
-                                        </table>           
+                                        <thead>
+                                            <th>ID</th>
+                                            <th>Tiêu đề</th>
+                                            <th>ID User</th>
+                                            <th>Trạng thái</th>
+                                            <th>Mô tả</th>
+                                            <th>URL</th>
+                                            <th>...</th>
+                                            <th>...</th>
+                                        </thead>
+                                        <tbody>
+                                                <% data.forEach(function(row){ %>
+                                                    <tr>
+                                                        <td><%= row.id %></td>
+                                                        <td><%= row.title %></td>
+                                                        <td><%= row.id_user %></td>
+                                                        <td><%= row.status_photo %> </td>
+                                                        <td><%= row.images_description%></td>
+                                                        <td><a  href=""><%= row.images_url %></a></td>
+                                                        <td><a href="">Xóa</a></td>
+                                                        <td><a href="">Duyệt</a></td>
+                                                        </tr>
+                                                <% }); %> 
+                                        </tbody>
+                                    </table>          
                                 </div>
                             </div>
                         </div>
