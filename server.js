@@ -2,7 +2,6 @@ var http = require('http')
     , express = require('express')
     , user = require('./routes/user')
     , routes = require('./routes/index')
-    , admin1 = require('./routes/admin1/admin1')
     , path = require('path');
 
 var session = require('express-session');
