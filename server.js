@@ -54,12 +54,6 @@ app.post('/login', user.login);//call for login post
 app.get('/home/profile', user.profile);//to render users profile
 app.get('/home/logout', user.logout);//call for logout
 
-//Bao
-app.get('/admin/listPhotoDelete',admin1.photo_0); //ảnh đã xóa
-app.get('/admin/listPHOTO',admin1.photo_1); //ảnh đã duyệt 
-app.post('/admin/listPHOTO',admin1.xoa_photo);
-app.get('/admin/listPhotoWait',admin1.photo_2); //ảnh chưa duyệt
-
 
 // ! Middleware
 app.listen(`${port}`, () => {
