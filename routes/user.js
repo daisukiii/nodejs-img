@@ -29,25 +29,30 @@ exports.signup = function (req, res) {
                 message = "This username is already taken";
                 // ! for debug, insert more value
                 sql = '';
-                res.render('register/index.ejs', { message: message });
+                res.render('register/index.ejs', {
+                    message: message
+                });
             }
             // TODO: check email
             else if (result_email.length > 0) {
                 message_e = "This email is already taken";
                 // ! for debug, insert more value
                 sql = '';
-                res.render('register/index.ejs', { message_e: message_e });
+                res.render('register/index.ejs', {
+                    message_e: message_e
+                });
             }
             //TODO: if anything true, insert to datebase
             else {
                 var query_insert = db.query(sql, function (err, result) {
                     message = "You are register successfully!";
-                    res.render('login/index.ejs', { message: message });
+                    res.render('login/index.ejs', {
+                        message: message
+                    });
                 });
             }
         });
-    }
-    else {
+    } else {
         res.render('register');
     }
 };
@@ -55,7 +60,6 @@ exports.signup = function (req, res) {
 //TODO: login
 exports.login = function (req, res) {
     var message = '';
-    var sess = req.session;
 
     if (req.method == "POST") {
         var post = req.body;
@@ -71,15 +75,18 @@ exports.login = function (req, res) {
                 console.log(results[0].id);
                 console.log(results[0].username);
                 res.redirect('home');
-            }
-            else {
+            } else {
                 message = 'Email or username not correct.';
-                res.render('login/index.ejs', { message: message });
+                res.render('login/index.ejs', {
+                    message: message
+                });
             }
 
         });
     } else {
-        res.render('login/index.ejs', { message: message });
+        res.render('login/index.ejs', {
+            message: message
+        });
     }
 };
 
@@ -99,28 +106,33 @@ exports.profile = function (req, res) {
         return;
     }
 
-    var sql = "SELECT * FROM `users` WHERE `id`='" + userId + "'";
-    db.query(sql, function (err, result) {
-        res.render('profile.ejs', { data: result });
-    });
+    res.redirect(`/p/${id}`);
 };
 //TODO: show username on home page
 // ! just for home page
-exports.home = function (req, res) {
-    var username = req.session.username;
-    if (username == null) {
+exports.home = async function (req, res) {
+    //var username = req.session.username;
+    var id = req.session.userId;
+    if (id == null) {
         res.redirect("../login");
         return;
-    }
-    else {
-        res.render('home/index.ejs', { data: username });
+    } else {
+        db.query("SELECT * FROM users WHERE id = " + id + "", async (err, result) => {
+            if (err) throw err;
+            res.render('home/index.ejs', {
+                data: result
+            });
+        });
+
     }
 };
 
 // TODO: without login
 exports.homenotlogin = function (req, res) {
     var result = '';
-    res.render('home/index.ejs', { data: result });
+    res.render('home/index.ejs', {
+        data: result
+    });
 };
 
 //TODO: upload image to server
@@ -141,3 +153,5 @@ exports.upload = function (req, res) {
     }
     //TODO: just for POST
 }
+
+//TODO: change password not here - > goto file server

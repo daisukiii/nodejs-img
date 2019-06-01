@@ -150,6 +150,20 @@
 		::-moz-input-placeholder {
 			color: rgba(255, 255, 255, 0.6);
 		}
+		button {
+			width: 260px;
+			height: 35px;
+			background: #fff;
+			border: 1px solid #fff;
+			cursor: pointer;
+			border-radius: 2px;
+			color: #a18d6c;
+			font-family: 'Exo', sans-serif;
+			font-size: 16px;
+			font-weight: 400;
+			padding: 6px;
+			margin-top: 10px;
+		}
 	</style>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
@@ -157,18 +171,25 @@
 </head>
 
 <body>
-
+	<% if(data.length > 0){ %>
+		<script>
+			window.alert("<%=data%>")
+			window.location.href = "<%= id %>";
+		</script>
+	<% } %>
 	<div class="body"></div>
 	<div class="grad"></div>
+	<form action="/c/<%= id %>" method="post">
 	<div class="header">
 		<div>Change<span>Pass</span></div>
 	</div>
 	<br>
 	<div class="login">
-		<input type="password" placeholder="password" name="user"><br>
-		<input type="password" placeholder="new password" name="password"><br>
-		<input type="button" value="Change">
+		<input type="password" placeholder="password" name="pass_old"><br>
+		<input type="password" placeholder="new password" name="pass_new"><br>
+		<button type="submit">Change password</button>
 	</div>
+	</form>
 	<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 
 

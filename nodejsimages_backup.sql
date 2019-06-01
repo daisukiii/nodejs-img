@@ -27,6 +27,9 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `admins`
 --
+create database `nodejsimages`;
+
+use `nodejsimages`;
 
 CREATE TABLE `admins` (
   `id` int(11) NOT NULL,
