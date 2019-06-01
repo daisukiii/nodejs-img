@@ -71,11 +71,11 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="nav navbar-nav ml-auto">
-                
+
                 <!--TODO: show name on navbar -->
                 <% if(data.length>0){ %>
                 <li class="ds-hover nav-item text-white">
-                    <a class="nav-link pl-1" href="../home/profile">Hello: <%=data%></a>
+                    <a class="nav-link pl-1" href="../p/<%=data[0].id%>">Hello: <%=data[0].username%></a>
                 </li>
                 <li class="ds-hover nav-item text-white">
                     <a class="nav-link pl-1" href="../messenger">Message</a>
@@ -598,7 +598,9 @@
     </section>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
     <script>
-        baguetteBox.run('.grid-gallery', { animation: 'slideIn' });
+        baguetteBox.run('.grid-gallery', {
+            animation: 'slideIn'
+        });
     </script>
     <!--TODO:test load <div id="LoadNewsFeed"></div> -->
 
