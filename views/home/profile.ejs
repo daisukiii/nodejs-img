@@ -42,12 +42,25 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="nav navbar-nav ml-auto">
-                    <li class="ds-hover nav-item text-white">
-                        <a class="nav-link pl-1" href="#">Login</a>
-                    </li>
-                    <li class="ds-hover nav-item text-white">
-                        <a class="nav-link" href="#">Create a account</a>
-                    </li>
+                    <!--TODO: show name on navbar -->
+                    <% if(username_nav.length>0){ %>
+                        <li class="ds-hover nav-item text-white">
+                            <a class="nav-link pl-1" href="../home/profile">Hello: <%= username_nav %></a>
+                        </li>
+                        <li class="ds-hover nav-item text-white">
+                            <a class="nav-link pl-1" href="../messenger">Message</a>
+                        </li>
+                        <li class="ds-hover nav-item text-white">
+                            <a class="nav-link" href="../home/logout">Logout</a>
+                        </li>
+                        <% } else{ %>
+                        <li class="ds-hover nav-item text-white">
+                            <a class="nav-link pl-1" href="../login">Login</a>
+                        </li>
+                        <li class="ds-hover nav-item text-white">
+                            <a class="nav-link" href="../register">Create a account</a>
+                        </li>
+                        <% } %>
                 </ul>
             </div>
         </div>
