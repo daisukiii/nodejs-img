@@ -40,9 +40,10 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/login", express.static(path.join(__dirname, "public")));
 app.use("/home", express.static(path.join(__dirname, "public")));
-app.use("/u", express.static(path.join(__dirname, "public")));
-app.use("/i", express.static(path.join(__dirname, "public")));
-app.use("/p", express.static(path.join(__dirname, "public")));
+app.use("/u", express.static(path.join(__dirname, "public"))); // ! images with login
+app.use("/i", express.static(path.join(__dirname, "public"))); // ! images without login
+app.use("/p", express.static(path.join(__dirname, "public"))); // ! profile user
+app.use("/c", express.static(path.join(__dirname, "public"))); // ! change password user
 app.use(
   session({
     secret: "keyboard cat",
@@ -262,27 +263,89 @@ app.get("/i/:id", async (req, res) => {
 });
 
 // ? profile user, show all image for user
-app.get("/p/:id", (req, res) => {
+app.get("/p/:id", async (req, res) => {
   var id = req.params.id;
+  var change_avatar = '';
+  var username_show = '';
+
   var username_nav = req.session.username;
-  var id_user = req.session.userId;
+  //var id_user = req.session.userId;
   if (username_nav == null) {
     username_nav = "";
   }
-  if (id == id_user) {
-    // res.render("home/profile.ejs", {
-    //   username_nav: username_nav,
-    //   id: id
-    // });
-  } else {
-    res.render("home/profile.ejs", {
-      username_nav: username_nav,
-      id: id
+  db.query("SELECT * FROM users WHERE id = " + id + "", async (err, result) => {
+    if (err) throw err;
+    username_show = result[0].username;
+    change_avatar = result[0].avatar_url;
+    console.log(username_show);
+    db.query("SELECT * FROM photos WHERE id_user = " + id + " and status_photo = 0 or status_photo = 1 ORDER BY id DESC", async (err, result) => {
+      if (err) throw err;
+      await res.render("home/profile.ejs", {
+        data: result,
+        username_show: username_show,
+        username_nav: username_nav,
+        change_avatar: change_avatar,
+        id: id
+      });
     });
-  }
-
+  });
+  // res.render("home/profile.ejs", {
+  //   username_nav: username_nav,
+  //   id: id
+  // });
   //res.html(id);
 });
+
+//? change password username 
+// ! GET
+app.get("/c/:id", async (req, res) => {
+  var id = req.params.id;
+  var id_user = req.session.userId;
+  var data = '';
+  var url = '';
+  if (id == id_user) {
+    res.render("home/changepass.ejs", {
+      data: data,
+      url: url,
+      id: id
+    });
+  } else {
+    res.redirect(`/p/${id}`);
+  }
+});
+
+//? change password username 
+// ! POST
+app.post("/c/:id", async (req, res) => {
+  var id = req.params.id;
+  var url_err = `/c/${id}`;
+  var url = "/c/";
+  if (req.method == "POST") {
+    var post = req.body;
+    var pass_old = post.pass_old;
+    var pass_new = post.pass_new;
+    if (pass_old != pass_new) {
+      await db.query("UPDATE users SET pass= " + pass_new + " WHERE id = " + id + "", async (err) => {
+        if (err) throw err;
+        var data = "Successful password update.";
+        url_err = `/p/${id}`;
+        await res.render("home/changepass.ejs", {
+          data: data,
+          url: url,
+          id: url_err
+        });
+      });
+    } else {
+      var data = "Cant update new password, try again";
+      await res.render("home/changepass.ejs", {
+        data: data,
+        url: url,
+        id: url_err
+      });
+    }
+  }
+});
+
 // ? just for test get data from url
 app.get("/test/:id", (req, res) => {
   /*
