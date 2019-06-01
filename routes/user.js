@@ -55,7 +55,6 @@ exports.signup = function (req, res) {
 //TODO: login
 exports.login = function (req, res) {
     var message = '';
-    var sess = req.s;
 
     if (req.method == "POST") {
         var post = req.body;
