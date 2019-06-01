@@ -195,7 +195,7 @@ app.get('/i/:id', async (req, res) => {
         img_description = '',
         username = 'Anonymous',
         img_url = '',
-        id_username = '';
+        id_username = '../home-page';
     var username_nav = req.session.username;
     if (username_nav == null) {
         username_nav = '';
@@ -224,7 +224,8 @@ app.get('/i/:id', async (req, res) => {
 
 // ? profile user, show all image for user
 app.get('/p/:id', (req, res) => {
-    
+    var id = req.params.id;
+    //res.html(id);
 });
 // ? just for test get data from url
 app.get('/test/:id', (req, res) => {
