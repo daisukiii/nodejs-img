@@ -102,36 +102,41 @@ exports.logout = function (req, res) {
 exports.profile = function (req, res) {
     var userId = req.session.userId;
     if (userId == null) {
-        res.redirect("login");
+        res.redirect("/login");
         return;
     }
-
-    res.redirect(`/p/${id}`);
+    res.redirect(`/p/${userId}`);
 };
 //TODO: show username on home page
 // ! just for home page
 exports.home = async function (req, res) {
-    //var username = req.session.username;
+    var username = req.session.username;
     var id = req.session.userId;
     if (id == null) {
         res.redirect("../login");
         return;
     } else {
-        db.query("SELECT * FROM users WHERE id = " + id + "", async (err, result) => {
+        db.query(`SELECT * FROM photos ORDER BY id DESC`, async (err, result) => {
             if (err) throw err;
             res.render('home/index.ejs', {
-                data: result
+                data: username,
+                owl: result,
+                content: result
             });
         });
-
     }
 };
 
 // TODO: without login
 exports.homenotlogin = function (req, res) {
-    var result = '';
-    res.render('home/index.ejs', {
-        data: result
+    var  username = '';
+    db.query(`SELECT * FROM photos ORDER BY id DESC`, async (err, result) => {
+        if (err) throw err;
+        res.render('home/index.ejs', {
+            data: username,
+            owl: result,
+            content: result
+        });
     });
 };
 
