@@ -44,6 +44,9 @@ app.use("/u", express.static(path.join(__dirname, "public"))); // ! images with 
 app.use("/i", express.static(path.join(__dirname, "public"))); // ! images without login
 app.use("/p", express.static(path.join(__dirname, "public"))); // ! profile user
 app.use("/c", express.static(path.join(__dirname, "public"))); // ! change password user
+app.use("/edit", express.static(path.join(__dirname, "public"))); // ! edit image
+app.use("/delete", express.static(path.join(__dirname, "public"))); // ! delete image
+app.use("/ca", express.static(path.join(__dirname, "public"))); // ! change avatar user
 app.use(
   session({
     secret: "keyboard cat",
@@ -169,10 +172,22 @@ app.post("/upload", (req, res) => {
 
 // ?  after upload image with login
 app.get("/u/:id", async (req, res) => {
+  var id = req.params.id;
+  db.query(`SELECT * FROM photos WHERE id = ${id}`, async (err, result) => {
+    if (err) throw err;
+    if (result[0].status_photo == 2) {
+      var url = '/home';
+      res.render("push.ejs", {
+        data: id,
+        url: url
+      });
+    }
+  });
   var title = "",
     img_description = "",
     username = "",
-    img_url = "";
+    img_url = "",
+    status_photo = "";
   var username_nav = req.session.username;
   if (username_nav == null) {
     username_nav = "";
@@ -182,7 +197,7 @@ app.get("/u/:id", async (req, res) => {
   // var ex_query = db.query(sql2, function (err, result) {
   //     return result[0].username;
   // });
-  var id = req.params.id;
+
   var sql = "SELECT * FROM photos WHERE id = " + id + "";
   console.log(sql); // ! only for debug
   db.query(sql, async function (err, result) {
@@ -196,6 +211,7 @@ app.get("/u/:id", async (req, res) => {
     img_url += "uploads/";
     img_url += result[0].images_url;
     //img_url += '"  alt="Card image cap"></img>';
+    status_photo = result[0].status_photo;
     db.query(
       "SELECT * FROM users WHERE id=" + result[0].id_user + "",
       async function (err, result) {
@@ -214,6 +230,7 @@ app.get("/u/:id", async (req, res) => {
               img_description: img_description,
               img_url: img_url,
               username_nav: username_nav,
+              status_photo: status_photo,
               data: result
             });
           }
@@ -256,6 +273,7 @@ app.get("/i/:id", async (req, res) => {
         img_description: img_description,
         img_url: img_url,
         username_nav: username_nav,
+        status_photo:status_photo,
         data: result
       });
     });
@@ -278,7 +296,7 @@ app.get("/p/:id", async (req, res) => {
     username_show = result[0].username;
     change_avatar = result[0].avatar_url;
     console.log(username_show);
-    db.query("SELECT * FROM photos WHERE id_user = " + id + " and status_photo = 0 or status_photo = 1 ORDER BY id DESC", async (err, result) => {
+    db.query("SELECT * FROM photos WHERE id_user = " + id + " ORDER BY id DESC", async (err, result) => {
       if (err) throw err;
       await res.render("home/profile.ejs", {
         data: result,
@@ -296,7 +314,7 @@ app.get("/p/:id", async (req, res) => {
   //res.html(id);
 });
 
-//? change password username 
+// ? change password username 
 // ! GET
 app.get("/c/:id", async (req, res) => {
   var id = req.params.id;
@@ -314,7 +332,7 @@ app.get("/c/:id", async (req, res) => {
   }
 });
 
-//? change password username 
+// ? change password username 
 // ! POST
 app.post("/c/:id", async (req, res) => {
   var id = req.params.id;
@@ -345,6 +363,133 @@ app.post("/c/:id", async (req, res) => {
     }
   }
 });
+
+// ? edit images
+// ! GET
+app.get("/edit/:idimg/:iduser", async (req, res) => {
+  var idimg = req.params.idimg;
+  var iduser = req.params.iduser;
+  console.log(idimg);
+  console.log(iduser);
+  var userId = req.session.userId;
+  if (iduser == userId) {
+    await db.query("SELECT * FROM photos WHERE id = " + idimg + "", async (err, result) => {
+      if (err) throw err;
+      res.render("editimg/index.ejs", {
+        data: result,
+        idimg: idimg,
+        iduser: iduser
+      });
+    });
+  } else {
+    res.redirect(`/u/${idimg}`);
+  }
+});
+
+// ? edit images
+// ! POST
+app.post("/edit/:idimg/:iduser", async (req, res) => {
+  var idimg = req.params.idimg;
+  var iduser = req.params.iduser;
+  if (req.method == "POST") {
+    var post = req.body;
+    var title = post.title;
+    var description = post.description;
+    await db.query(`UPDATE photos SET title = "${title}" WHERE id = ${idimg} and id_user = ${iduser}`, async (err) => {
+      if (err) throw err;
+    });
+    await db.query(`UPDATE photos SET images_description = "${description}" WHERE id = ${idimg} and id_user = ${iduser}`, async (err) => {
+      res.redirect(`/u/${idimg}`);
+    });
+  } else {
+    res.redirect(`/edit/${idimg}/${iduser}`);
+  }
+});
+
+
+// ? delete image
+// ! GET
+app.get("/delete/:idimg/:iduser", async (req, res) => {
+  var idimg = req.params.idimg;
+  var iduser = req.params.iduser;
+  // ! just for debug
+  console.log(idimg);
+  console.log(iduser);
+  var userId = req.session.userId;
+  if (iduser == userId) {
+    await db.query("SELECT * FROM photos WHERE id = " + idimg + "", async (err, result) => {
+      if (err) throw err;
+      res.render("delimg/index.ejs", {
+        data: result,
+        idimg: idimg,
+        iduser: iduser
+      });
+    });
+  } else {
+    res.redirect(`/u/${idimg}`);
+  }
+});
+
+// ? delete image
+// ! POST
+app.post("/delete/:idimg/:iduser", async (req, res) => {
+  var idimg = req.params.idimg;
+  var iduser = req.params.iduser;
+  // ! just for debug
+  console.log(idimg);
+  console.log(iduser);
+  var userId = req.session.userId;
+  if (iduser == userId) {
+    await db.query(`UPDATE photos SET status_photo = 2 WHERE id = ${idimg} and id_user = ${iduser}`, async (err, result) => {
+      if (err) throw err;
+      res.render("push.ejs", {
+        data: idimg,
+        url: iduser
+      });
+    });
+  } else {
+    res.redirect(`/u/${idimg}`);
+  }
+});
+
+// ? change avatar user
+// ! GET
+app.get("/ca/:id", async (req, res) => {
+  var id = req.params.id;
+  var userId = req.session.userId;
+  var username = req.session.username;
+  if (userId == id) {
+    //TODO: upload image with login
+    res.render('home/uploadavatar.ejs', {
+      data_username: username,
+      id: id
+    });
+  } else {
+    res.redirect(`/p/${id}`);
+  }
+
+});
+
+// ? change avatar user
+// ! POST
+app.post("/ca/:id", async (req, res) => {
+  var id = req.params.id;
+  upload(req, res, err => {
+    // ! this line for debug
+    console.log(req.file.filename);
+    var userId = req.session.userId;
+    // ? var username = req.session.username;
+    // ! var post = req.body;
+    if (req.method == "POST") {
+      db.query(`UPDATE users SET avatar_url = '${req.file.filename}' WHERE id = ${id}`, async (err) => {
+        if (err) throw err;
+        res.redirect(`/p/${id}`);
+      });
+    }
+  });
+});
+
+
 
 // ? just for test get data from url
 app.get("/test/:id", (req, res) => {

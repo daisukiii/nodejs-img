@@ -44,7 +44,7 @@
                     <!--TODO: show name on navbar -->
                     <% if(username_nav.length>0){ %>
                     <li class="ds-hover nav-item text-white">
-                        <a class="nav-link pl-1" href="../home/profile">Hello: <%= username_nav %></a>
+                        <a class="nav-link pl-1" href="/home/profile">Hello: <%= username_nav %></a>
                     </li>
                     <li class="ds-hover nav-item text-white">
                         <a class="nav-link pl-1" href="../messenger">Message</a>
@@ -97,8 +97,14 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="list-group-item"><%= title %></li>
-                            <li class="list-group-item"><%= img_description %></li>
+                            <li class="list-group-item">Title: <%= title %></li>
+                            <li class="list-group-item">Description: <%= img_description %></li>
+                            <% if(status_photo == 0 ){%>
+                                <p class="list-group-item">Waiting for verify. <img src="images/delete.png" alt="" srcset=""></p>
+                            <% } %> 
+                            <% if(status_photo == 1 ){%>
+                                <p class="list-group-item">Verify by Admin <img src="images/check-mark.png" alt="" srcset=""></p>
+                            <% } %>
 
                         </ul>
                     </div>
