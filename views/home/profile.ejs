@@ -24,7 +24,7 @@
     <!--TODO: This navigation-->
     <nav class="navbar navbar-expand-lg Linear-Gradient-nav fixed-top fix-z-1">
         <div class="container">
-            <a class="navbar-brand ds-hover nav-link" href="#">
+            <a class="navbar-brand ds-hover nav-link" href="/home">
                 <img src="images/7.png" width="20" height="auto" alt="logo">
                 3RAW
             </a>
@@ -67,7 +67,7 @@
     </nav>
     <div class="pt-5"> </div>
     <div class="container pt-4">
-        <% if(username_nav.length > 0){ %>
+        <% if(username_nav.length > 0 && username_nav == username_show){ %>
             <div class="row">
                 <div class="col-md-1"></div>
                 <div class="col-md-3">
@@ -159,34 +159,35 @@
                         <div class="row">
                         <% if(data){%>
                             <% for(var i=0;i< data.length;i++){%>
-                            <div class="col-md-12 col-lg-4 col-md-3 pt-4 item">
-                                <div class="card ds-card">
-                                    <a class="lightbox" href="/u/<%= data[i].id %>">
-                                        <img class="img-fluid image scale-on-hover box-profile" src="uploads/<%= data[i].images_url %>">
-                                    </a>
-                                    <div class="card-body">
-                                        <h5 class="card-title"><%= data[i].title %></h5>
-                                        <p class="card-text">Description: <%= data[i].images_description %></p>
-                                        <% if(data[i].status_photo == 0 ){%>
-                                            <p class="card-text">Waiting for verify. <img src="images/delete.png" alt="" srcset=""></p>
-                                        <% } %> 
-                                        <% if(data[i].status_photo == 1 ){%>
-                                            <p class="card-text">Verify by Admin <img src="images/check-mark.png" alt="" srcset=""></p>
-                                        <% } %>
-                                        <% if (username_nav.length > 0) { %>
-                                            <div class="text-center">
-                                                <a href="/delete/<%= data[i].id %>/<%= data[i].id_user %>">
-                                                    <button type="button" class="btn btn-danger">Delete</button>
-                                                </a>
-                                                <a href="/edit/<%= data[i].id %>/<%= data[i].id_user %>">
-                                                    <button type="button" class="btn btn-info">Edit</button>
-                                                </a>
-                                            </div>  
-                                        <% } %>    
+                                <% if(data[i].status_photo == 0 || data[i].status_photo == 1){%>
+                                    <div class="col-md-12 col-lg-4 col-md-3 pt-4 item">
+                                        <div class="card ds-card">
+                                            <a class="lightbox" href="/u/<%= data[i].id %>">
+                                                <img class="img-fluid image scale-on-hover box-profile" src="uploads/<%= data[i].images_url %>">
+                                            </a>
+                                            <div class="card-body">
+                                                <h5 class="card-title"><%= data[i].title %></h5>
+                                                <p class="card-text">Description: <%= data[i].images_description %></p>
+                                                <% if(data[i].status_photo == 0 ){%>
+                                                    <p class="card-text">Waiting for verify. <img src="images/delete.png" alt="" srcset=""></p>
+                                                <% } %> 
+                                                <% if(data[i].status_photo == 1 ){%>
+                                                    <p class="card-text">Verify by Admin <img src="images/check-mark.png" alt="" srcset=""></p>
+                                                <% } %>
+                                                <% if (username_nav.length > 0 && username_nav == username_show) { %>
+                                                    <div class="text-center">
+                                                        <a href="/delete/<%= data[i].id %>/<%= data[i].id_user %>">
+                                                            <button type="button" class="btn btn-danger">Delete</button>
+                                                        </a>
+                                                        <a href="/edit/<%= data[i].id %>/<%= data[i].id_user %>">
+                                                            <button type="button" class="btn btn-info">Edit</button>
+                                                        </a>
+                                                    </div>  
+                                                <% } %>    
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-
-                            </div>
+                                <%}%>
                             <%}%>
                         <%}%>
                         </div>
