@@ -65,18 +65,44 @@ exports.user=function(req,res){
 exports.edituser=function(req,res){
     var params=req.body;
     data=post_md.updatePost(params);
-    if(!data){
+    if(!data){        
         res.json({status_code:500});
     }else{
-        data.then(function(result){
-            res.json({status_code:200});
+        data.then(function(result){            
+            res.json({status_code:200});            
         }).catch(function(err){
             res.json({status_code:500});
         });
-    }
+    }    
 };
+// delete user
+exports.userid= async (req,res) => {
+    var post_id=req.id;    
+    await db.query('UPDATE photo SET status_photo=2 WHERE id_user=post_id',async(err,result)=>{
+        if(err) throw err;        
+        await db.query('INSERT deleteuser')
+
+
+    });
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //deleteuser
-exports.deleteuser=function(req,res){
+/*exports.deleteuser=function(req,res){
     var post_id=req.body.id;
     var data=post_md.deletePost(post_id);
     if(!data){
@@ -88,14 +114,14 @@ exports.deleteuser=function(req,res){
             res.json({status_code:500});
         });
     }
-};
+};*/
 //them user
 exports.newuser=function(req,res){
     res.render("Admin/newuser",{data:{error:false}});
 }
 exports.newuser_1=function(req,res)
 {
-    var params=req.body;    
+    var params=req.body;   
 
         var data=post_md.addPost(params);
         data.then(function(result){
@@ -106,5 +132,6 @@ exports.newuser_1=function(req,res)
 
     });
 };
+
     
 

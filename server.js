@@ -1,6 +1,7 @@
 var express = require("express"),
   user = require("./routes/user"),
   routes = require("./routes/index"),
+  admin = require("./routes/admin/index"),
   multer = require("multer"),
   path = require("path");
 
@@ -24,7 +25,7 @@ var connection = mysql.createConnection({
   database: "nodejsimages"
 });
 
-connection.connect(function (err) {
+connection.connect(function(err) {
   if (err) throw err;
   console.log("Database Connected!");
 });
@@ -33,9 +34,11 @@ global.db = connection;
 
 // ! all environments
 app.set("views", __dirname + "/views");
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+app.use(
+  bodyParser.urlencoded({
+    extended: true
+  })
+);
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/login", express.static(path.join(__dirname, "public")));
@@ -47,6 +50,8 @@ app.use("/c", express.static(path.join(__dirname, "public"))); // ! change passw
 app.use("/edit", express.static(path.join(__dirname, "public"))); // ! edit image
 app.use("/delete", express.static(path.join(__dirname, "public"))); // ! delete image
 app.use("/ca", express.static(path.join(__dirname, "public"))); // ! change avatar user
+app.use("/static", express.static(path.join(__dirname, "public")));
+app.use("/admin", express.static(path.join(__dirname, "public")));
 app.use(
   session({
     secret: "keyboard cat",
@@ -64,7 +69,7 @@ app.use(
 // Set The Storage Engine
 const storage = multer.diskStorage({
   destination: "./public/uploads/",
-  filename: function (req, file, cb) {
+  filename: function(req, file, cb) {
     cb(null, "3raw" + "-" + Date.now() + path.extname(file.originalname));
   }
 });
@@ -75,7 +80,7 @@ const upload = multer({
   limits: {
     fileSize: 100000000
   },
-  fileFilter: function (req, file, cb) {
+  fileFilter: function(req, file, cb) {
     checkFileType(file, cb);
   }
 }).single("myImage");
@@ -132,12 +137,12 @@ app.post("/upload", (req, res) => {
           description +
           "')";
         console.log(sql_photos_any); // TODO: just for debug
-        db.query(sql_photos_any, function (err, result) {
+        db.query(sql_photos_any, function(err, result) {
           db.query(
             "SELECT * FROM `photos_any` WHERE `images_url` = '" +
-            req.file.filename +
-            "'",
-            function (err, result) {
+              req.file.filename +
+              "'",
+            function(err, result) {
               var url = `i/${result[0].id}`;
               res.redirect(url);
             }
@@ -155,12 +160,12 @@ app.post("/upload", (req, res) => {
           req.file.filename +
           "')";
         console.log(sql_photos); // TODO: just for debug
-        db.query(sql_photos, function (err, result) {
+        db.query(sql_photos, function(err, result) {
           sql_photos_redirect =
             "SELECT * FROM `photos` WHERE `images_url` = '" +
             req.file.filename +
             "'";
-          db.query(sql_photos_redirect, function (err, result) {
+          db.query(sql_photos_redirect, function(err, result) {
             var url = `u/${result[0].id}`;
             res.redirect(url);
           });
@@ -176,7 +181,7 @@ app.get("/u/:id", async (req, res) => {
   db.query(`SELECT * FROM photos WHERE id = ${id}`, async (err, result) => {
     if (err) throw err;
     if (result[0].status_photo == 2) {
-      var url = '/home';
+      var url = "../home";
       res.render("push.ejs", {
         data: id,
         url: url
@@ -200,7 +205,7 @@ app.get("/u/:id", async (req, res) => {
 
   var sql = "SELECT * FROM photos WHERE id = " + id + "";
   console.log(sql); // ! only for debug
-  db.query(sql, async function (err, result) {
+  db.query(sql, async function(err, result) {
     if (err) throw err;
     // ! just for debug
     console.log(result);
@@ -214,14 +219,14 @@ app.get("/u/:id", async (req, res) => {
     status_photo = result[0].status_photo;
     db.query(
       "SELECT * FROM users WHERE id=" + result[0].id_user + "",
-      async function (err, result) {
+      async function(err, result) {
         if (err) throw err;
         console.log(result);
         username = result[0].username;
         id_username = result[0].id;
         db.query(
           "SELECT * FROM photos ORDER BY id DESC LIMIT 10",
-          async function (err, result) {
+          async function(err, result) {
             if (err) throw err;
             await res.render("home/newsfeed.ejs", {
               username: username,
@@ -252,7 +257,7 @@ app.get("/i/:id", async (req, res) => {
     username_nav = "";
   }
   var id = req.params.id;
-  db.query("SELECT * FROM photos_any WHERE id= " + id + "", async function (
+  db.query("SELECT * FROM photos_any WHERE id= " + id + "", async function(
     err,
     result
   ) {
@@ -261,7 +266,7 @@ app.get("/i/:id", async (req, res) => {
     img_description = result[0].images_description;
     img_url += "uploads/";
     img_url += result[0].images_url;
-    db.query("SELECT * FROM photos ORDER BY id DESC LIMIT 10", async function (
+    db.query("SELECT * FROM photos ORDER BY id DESC LIMIT 10", async function(
       err,
       result
     ) {
@@ -273,7 +278,7 @@ app.get("/i/:id", async (req, res) => {
         img_description: img_description,
         img_url: img_url,
         username_nav: username_nav,
-        status_photo:status_photo,
+        status_photo: status_photo,
         data: result
       });
     });
@@ -283,8 +288,8 @@ app.get("/i/:id", async (req, res) => {
 // ? profile user, show all image for user
 app.get("/p/:id", async (req, res) => {
   var id = req.params.id;
-  var change_avatar = '';
-  var username_show = '';
+  var change_avatar = "";
+  var username_show = "";
 
   var username_nav = req.session.username;
   //var id_user = req.session.userId;
@@ -296,16 +301,19 @@ app.get("/p/:id", async (req, res) => {
     username_show = result[0].username;
     change_avatar = result[0].avatar_url;
     console.log(username_show);
-    db.query("SELECT * FROM photos WHERE id_user = " + id + " ORDER BY id DESC", async (err, result) => {
-      if (err) throw err;
-      await res.render("home/profile.ejs", {
-        data: result,
-        username_show: username_show,
-        username_nav: username_nav,
-        change_avatar: change_avatar,
-        id: id
-      });
-    });
+    db.query(
+      "SELECT * FROM photos WHERE id_user = " + id + " ORDER BY id DESC",
+      async (err, result) => {
+        if (err) throw err;
+        await res.render("home/profile.ejs", {
+          data: result,
+          username_show: username_show,
+          username_nav: username_nav,
+          change_avatar: change_avatar,
+          id: id
+        });
+      }
+    );
   });
   // res.render("home/profile.ejs", {
   //   username_nav: username_nav,
@@ -314,13 +322,13 @@ app.get("/p/:id", async (req, res) => {
   //res.html(id);
 });
 
-// ? change password username 
+// ? change password username
 // ! GET
 app.get("/c/:id", async (req, res) => {
   var id = req.params.id;
   var id_user = req.session.userId;
-  var data = '';
-  var url = '';
+  var data = "";
+  var url = "";
   if (id == id_user) {
     res.render("home/changepass.ejs", {
       data: data,
@@ -332,7 +340,7 @@ app.get("/c/:id", async (req, res) => {
   }
 });
 
-// ? change password username 
+// ? change password username
 // ! POST
 app.post("/c/:id", async (req, res) => {
   var id = req.params.id;
@@ -343,16 +351,19 @@ app.post("/c/:id", async (req, res) => {
     var pass_old = post.pass_old;
     var pass_new = post.pass_new;
     if (pass_old != pass_new) {
-      await db.query("UPDATE users SET pass= " + pass_new + " WHERE id = " + id + "", async (err) => {
-        if (err) throw err;
-        var data = "Successful password update.";
-        url_err = `/p/${id}`;
-        await res.render("home/changepass.ejs", {
-          data: data,
-          url: url,
-          id: url_err
-        });
-      });
+      await db.query(
+        "UPDATE users SET pass= " + pass_new + " WHERE id = " + id + "",
+        async err => {
+          if (err) throw err;
+          var data = "Successful password update.";
+          url_err = `/p/${id}`;
+          await res.render("home/changepass.ejs", {
+            data: data,
+            url: url,
+            id: url_err
+          });
+        }
+      );
     } else {
       var data = "Cant update new password, try again";
       await res.render("home/changepass.ejs", {
@@ -373,14 +384,17 @@ app.get("/edit/:idimg/:iduser", async (req, res) => {
   console.log(iduser);
   var userId = req.session.userId;
   if (iduser == userId) {
-    await db.query("SELECT * FROM photos WHERE id = " + idimg + "", async (err, result) => {
-      if (err) throw err;
-      res.render("editimg/index.ejs", {
-        data: result,
-        idimg: idimg,
-        iduser: iduser
-      });
-    });
+    await db.query(
+      "SELECT * FROM photos WHERE id = " + idimg + "",
+      async (err, result) => {
+        if (err) throw err;
+        res.render("editimg/index.ejs", {
+          data: result,
+          idimg: idimg,
+          iduser: iduser
+        });
+      }
+    );
   } else {
     res.redirect(`/u/${idimg}`);
   }
@@ -395,17 +409,22 @@ app.post("/edit/:idimg/:iduser", async (req, res) => {
     var post = req.body;
     var title = post.title;
     var description = post.description;
-    await db.query(`UPDATE photos SET title = "${title}" WHERE id = ${idimg} and id_user = ${iduser}`, async (err) => {
-      if (err) throw err;
-    });
-    await db.query(`UPDATE photos SET images_description = "${description}" WHERE id = ${idimg} and id_user = ${iduser}`, async (err) => {
-      res.redirect(`/u/${idimg}`);
-    });
+    await db.query(
+      `UPDATE photos SET title = "${title}" WHERE id = ${idimg} and id_user = ${iduser}`,
+      async err => {
+        if (err) throw err;
+      }
+    );
+    await db.query(
+      `UPDATE photos SET images_description = "${description}" WHERE id = ${idimg} and id_user = ${iduser}`,
+      async err => {
+        res.redirect(`/u/${idimg}`);
+      }
+    );
   } else {
     res.redirect(`/edit/${idimg}/${iduser}`);
   }
 });
-
 
 // ? delete image
 // ! GET
@@ -417,14 +436,17 @@ app.get("/delete/:idimg/:iduser", async (req, res) => {
   console.log(iduser);
   var userId = req.session.userId;
   if (iduser == userId) {
-    await db.query("SELECT * FROM photos WHERE id = " + idimg + "", async (err, result) => {
-      if (err) throw err;
-      res.render("delimg/index.ejs", {
-        data: result,
-        idimg: idimg,
-        iduser: iduser
-      });
-    });
+    await db.query(
+      "SELECT * FROM photos WHERE id = " + idimg + "",
+      async (err, result) => {
+        if (err) throw err;
+        res.render("delimg/index.ejs", {
+          data: result,
+          idimg: idimg,
+          iduser: iduser
+        });
+      }
+    );
   } else {
     res.redirect(`/u/${idimg}`);
   }
@@ -440,13 +462,16 @@ app.post("/delete/:idimg/:iduser", async (req, res) => {
   console.log(iduser);
   var userId = req.session.userId;
   if (iduser == userId) {
-    await db.query(`UPDATE photos SET status_photo = 2 WHERE id = ${idimg} and id_user = ${iduser}`, async (err, result) => {
-      if (err) throw err;
-      res.render("push.ejs", {
-        data: idimg,
-        url: iduser
-      });
-    });
+    await db.query(
+      `UPDATE photos SET status_photo = 2 WHERE id = ${idimg} and id_user = ${iduser}`,
+      async (err, result) => {
+        if (err) throw err;
+        res.render("push.ejs", {
+          data: idimg,
+          url: iduser
+        });
+      }
+    );
   } else {
     res.redirect(`/u/${idimg}`);
   }
@@ -460,14 +485,13 @@ app.get("/ca/:id", async (req, res) => {
   var username = req.session.username;
   if (userId == id) {
     //TODO: upload image with login
-    res.render('home/uploadavatar.ejs', {
+    res.render("home/uploadavatar.ejs", {
       data_username: username,
       id: id
     });
   } else {
     res.redirect(`/p/${id}`);
   }
-
 });
 
 // ? change avatar user
@@ -481,15 +505,16 @@ app.post("/ca/:id", async (req, res) => {
     // ? var username = req.session.username;
     // ! var post = req.body;
     if (req.method == "POST") {
-      db.query(`UPDATE users SET avatar_url = '${req.file.filename}' WHERE id = ${id}`, async (err) => {
-        if (err) throw err;
-        res.redirect(`/p/${id}`);
-      });
+      db.query(
+        `UPDATE users SET avatar_url = '${req.file.filename}' WHERE id = ${id}`,
+        async err => {
+          if (err) throw err;
+          res.redirect(`/p/${id}`);
+        }
+      );
     }
   });
 });
-
-
 
 // ? just for test get data from url
 app.get("/test/:id", (req, res) => {
@@ -506,6 +531,16 @@ app.get("/test/:id", (req, res) => {
   });
 });
 // ! Middleware
+// code Hung
+app.get("/admin/listuser", admin.listuser);
+app.get("/admin/user/:id", admin.user);
+app.put("/admin/user", admin.edituser);
+//app.delete("/admin/user/delete", admin.deleteuser);
+app.get("/admin/newuser", admin.newuser);
+app.post("/admin/newuser", admin.newuser_1);
+app.post("/admin/user/delete", admin.userid);
+
+
 app.listen(`${port}`, () => {
   console.log(`App running in http://${hostname}:${port}`);
 });
