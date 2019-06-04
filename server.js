@@ -131,7 +131,7 @@ app.post("/upload", (req, res) => {
         var sql_photos_any =
           "INSERT INTO `photos_any` (`title`,`status_photo_any`,`images_url`,`images_description`) VALUES ('" +
           title +
-          "','1','" +
+          "','0','" +
           req.file.filename +
           "','" +
           description +
@@ -191,6 +191,7 @@ app.get("/u/:id", async (req, res) => {
   var title = "",
     img_description = "",
     username = "",
+    url_avatar = "",
     img_url = "",
     status_photo = "";
   var username_nav = req.session.username;
@@ -224,6 +225,7 @@ app.get("/u/:id", async (req, res) => {
         console.log(result);
         username = result[0].username;
         id_username = result[0].id;
+        url_avatar = result[0].avatar_url;
         db.query(
           "SELECT * FROM photos ORDER BY id DESC LIMIT 10",
           async function(err, result) {
@@ -231,6 +233,7 @@ app.get("/u/:id", async (req, res) => {
             await res.render("home/newsfeed.ejs", {
               username: username,
               id_username: id_username,
+              url_avatar: url_avatar,
               title: title,
               img_description: img_description,
               img_url: img_url,
@@ -251,6 +254,7 @@ app.get("/i/:id", async (req, res) => {
     img_description = "",
     username = "Anonymous",
     img_url = "",
+    url_avatar = "images/user.jpg",
     id_username = "../home-page";
   var username_nav = req.session.username;
   if (username_nav == null) {
@@ -274,6 +278,7 @@ app.get("/i/:id", async (req, res) => {
       await res.render("home/newsfeed.ejs", {
         username: username,
         id_username: id_username,
+        url_avatar: url_avatar,
         title: title,
         img_description: img_description,
         img_url: img_url,
