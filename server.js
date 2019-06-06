@@ -25,7 +25,7 @@ var connection = mysql.createConnection({
   database: "nodejsimages"
 });
 
-connection.connect(function(err) {
+connection.connect(function (err) {
   if (err) throw err;
   console.log("Database Connected!");
 });
@@ -69,7 +69,7 @@ app.use(
 // Set The Storage Engine
 const storage = multer.diskStorage({
   destination: "./public/uploads/",
-  filename: function(req, file, cb) {
+  filename: function (req, file, cb) {
     cb(null, "3raw" + "-" + Date.now() + path.extname(file.originalname));
   }
 });
@@ -80,7 +80,7 @@ const upload = multer({
   limits: {
     fileSize: 100000000
   },
-  fileFilter: function(req, file, cb) {
+  fileFilter: function (req, file, cb) {
     checkFileType(file, cb);
   }
 }).single("myImage");
@@ -131,18 +131,18 @@ app.post("/upload", (req, res) => {
         var sql_photos_any =
           "INSERT INTO `photos_any` (`title`,`status_photo_any`,`images_url`,`images_description`) VALUES ('" +
           title +
-          "','1','" +
+          "','0','" +
           req.file.filename +
           "','" +
           description +
           "')";
         console.log(sql_photos_any); // TODO: just for debug
-        db.query(sql_photos_any, function(err, result) {
+        db.query(sql_photos_any, function (err, result) {
           db.query(
             "SELECT * FROM `photos_any` WHERE `images_url` = '" +
-              req.file.filename +
-              "'",
-            function(err, result) {
+            req.file.filename +
+            "'",
+            function (err, result) {
               var url = `i/${result[0].id}`;
               res.redirect(url);
             }
@@ -160,12 +160,12 @@ app.post("/upload", (req, res) => {
           req.file.filename +
           "')";
         console.log(sql_photos); // TODO: just for debug
-        db.query(sql_photos, function(err, result) {
+        db.query(sql_photos, function (err, result) {
           sql_photos_redirect =
             "SELECT * FROM `photos` WHERE `images_url` = '" +
             req.file.filename +
             "'";
-          db.query(sql_photos_redirect, function(err, result) {
+          db.query(sql_photos_redirect, function (err, result) {
             var url = `u/${result[0].id}`;
             res.redirect(url);
           });
@@ -191,6 +191,7 @@ app.get("/u/:id", async (req, res) => {
   var title = "",
     img_description = "",
     username = "",
+    url_avatar = "",
     img_url = "",
     status_photo = "";
   var username_nav = req.session.username;
@@ -205,7 +206,7 @@ app.get("/u/:id", async (req, res) => {
 
   var sql = "SELECT * FROM photos WHERE id = " + id + "";
   console.log(sql); // ! only for debug
-  db.query(sql, async function(err, result) {
+  db.query(sql, async function (err, result) {
     if (err) throw err;
     // ! just for debug
     console.log(result);
@@ -219,18 +220,20 @@ app.get("/u/:id", async (req, res) => {
     status_photo = result[0].status_photo;
     db.query(
       "SELECT * FROM users WHERE id=" + result[0].id_user + "",
-      async function(err, result) {
+      async function (err, result) {
         if (err) throw err;
         console.log(result);
         username = result[0].username;
         id_username = result[0].id;
+        url_avatar = result[0].avatar_url;
         db.query(
           "SELECT * FROM photos ORDER BY id DESC LIMIT 10",
-          async function(err, result) {
+          async function (err, result) {
             if (err) throw err;
             await res.render("home/newsfeed.ejs", {
               username: username,
               id_username: id_username,
+              url_avatar: url_avatar,
               title: title,
               img_description: img_description,
               img_url: img_url,
@@ -251,13 +254,14 @@ app.get("/i/:id", async (req, res) => {
     img_description = "",
     username = "Anonymous",
     img_url = "",
+    url_avatar = "images/user.jpg",
     id_username = "../home-page";
   var username_nav = req.session.username;
   if (username_nav == null) {
     username_nav = "";
   }
   var id = req.params.id;
-  db.query("SELECT * FROM photos_any WHERE id= " + id + "", async function(
+  db.query("SELECT * FROM photos_any WHERE id= " + id + "", async function (
     err,
     result
   ) {
@@ -266,7 +270,7 @@ app.get("/i/:id", async (req, res) => {
     img_description = result[0].images_description;
     img_url += "uploads/";
     img_url += result[0].images_url;
-    db.query("SELECT * FROM photos ORDER BY id DESC LIMIT 10", async function(
+    db.query("SELECT * FROM photos ORDER BY id DESC LIMIT 10", async function (
       err,
       result
     ) {
@@ -274,6 +278,7 @@ app.get("/i/:id", async (req, res) => {
       await res.render("home/newsfeed.ejs", {
         username: username,
         id_username: id_username,
+        url_avatar: url_avatar,
         title: title,
         img_description: img_description,
         img_url: img_url,
