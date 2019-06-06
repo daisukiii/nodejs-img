@@ -1,4 +1,5 @@
 use `nodejsimages`;
+SELECT * FROM users WHERE id = 8;
 SELECT * FROM photos WHERE id = 17;
 UPDATE photos SET title = "thay doi"  WHERE id = 17 and id_user = 4;
 

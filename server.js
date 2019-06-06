@@ -538,7 +538,94 @@ app.put("/admin/user", admin.edituser);
 //app.delete("/admin/user/delete", admin.deleteuser);
 app.get("/admin/newuser", admin.newuser);
 app.post("/admin/newuser", admin.newuser_1);
-app.post("/admin/user/delete", admin.userid);
+app.get("/admin/listdeleteuser",admin.listdeleteuser);
+// ---------------ham delete user--------------------------------------------------------
+/*app.get("/admin/listdeleteuser/:id", async (req, res) => {
+  
+  var id = req.params.id;
+  // ! just for debug  
+  console.log(id);  
+  
+    await db.query(
+      "SELECT * FROM users WHERE id = " + id + "",
+      async (err, result) => {
+        if (err) throw err;
+        id=result[0].id;
+        email=result[0].email;
+        db.query(
+          "INSERT deleteuser SET email=? WHERE id=?",[email,id],
+          async (err, result) => {
+            if(err) throw err;            
+          }
+        );        
+
+      }
+    );     
+});
+
+app.post("/admin/listdeleteuser/:id", async (req, res) => {
+  
+  var id = req.params.id;
+  // ! just for debug
+  console.log(id);  
+  
+    await db.query(
+      `UPDATE photos SET status_photo = 2 WHERE id_user = ${id}`,
+      async (err, result) => {
+        if (err) throw err;
+        db.query(
+          `UPDATE users SET status_user = 1 WHERE id = ${id}`,
+          async (err, result) => {
+            if(err) throw err;
+            result.redirect("/admin/listdeleteuser");
+          }
+        )
+        
+      }
+    );  
+});*/
+
+app.get("/admin/listdeleteuser/:id", async (req, res) => {
+  var id = req.params.id;
+  // ! just for debug
+  console.log(id);
+  res.render("admin/push.ejs", {
+    id: id
+  });
+});
+
+app.post("/admin/listdeleteuser/:id", async (req, res) => {
+  var id = req.params.id;
+  var email_del = "";
+  // ! just for debug
+  console.log(id);
+  await db.query(`SELECT * FROM users WHERE id = ${id}`, async (err, result) => {
+    console.log(`SELECT * FROM users WHERE id = ${id}`);
+    if (err) throw err;
+    email_del = result[0].email;
+    await db.query(
+      `INSERT INTO deleteuser (email) VALUES ('${email_del}')`,
+      async err => {
+        if (err) throw err;
+        await db.query(
+          `UPDATE photos SET status_photo= '2' WHERE id_user=${id}`,
+          async err => {
+            if (err) throw err;
+            await db.query(
+              `UPDATE users SET status_user= '1' WHERE id=${id}`,
+              async err => {
+                if (err) throw err;
+                res.redirect("/admin/listuser");
+              }
+            );
+          }
+        );
+      }
+    );
+  });
+});
+
+//----------------------------------------------------------------------------------------
 
 
 app.listen(`${port}`, () => {

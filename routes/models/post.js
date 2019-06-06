@@ -57,6 +57,20 @@ function updatePost(params){
 
 }*/
 
+function getAllDeletePosts(){
+    var defer=q.defer();
+    var query=db.query('SELECT * FROM deleteuser', function(err,posts){
+        if(err){
+            defer.reject(err);            
+        }else{
+            defer.resolve(posts);
+        }
+    });
+    return defer.promise;
+}
+
+
+
 //them user
 function addPost(params){
     if(params){
@@ -80,8 +94,9 @@ module.exports={
     getAllPosts:getAllPosts,
     getPostById:getPostById,
     updatePost:updatePost,
-    deletePost:deletePost,
-    addPost:addPost
+    //deletePost:deletePost,
+    addPost:addPost,
+    getAllDeletePosts:getAllDeletePosts
 }
 
 
