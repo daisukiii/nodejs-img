@@ -75,29 +75,21 @@ exports.edituser=function(req,res){
         });
     }    
 };
-// delete user
-exports.userid= async (req,res) => {
-    var post_id=req.id;    
-    await db.query('UPDATE photo SET status_photo=2 WHERE id_user=post_id',async(err,result)=>{
-        if(err) throw err;        
-        await db.query('INSERT deleteuser')
 
+exports.listdeleteuser = function (req, res) {
 
+    var data = post_md.getAllDeletePosts();
+    data.then(function (posts) {
+        var data = {
+            posts: posts,
+            error: false
+        };
+        res.render("admin/listdeleteuser", { data: data });
+
+    }).catch(function (err) {
+        res.render("admin/listdeleteuser", { data: { error: "Get Post data is Error" } });
     });
-    
-    
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 

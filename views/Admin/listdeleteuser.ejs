@@ -208,7 +208,7 @@
                         <div class="card">
                             <div class="header">
                                 <div class="col-md-8">
-                                    <h4 class="title">Danh sách người dùng đã đăng kí</h4>
+                                    <h4 class="title">Danh sách USER bị xóa nha</h4>
                                     <p class="category">Cập nhật 3 phút trước</p>
                                     </div>
                                     <div class="col-md-4">                                                         
@@ -222,11 +222,22 @@
                                     <thead>
                                         <th>ID</th>
                                     	<th>Email</th>
-                                    	<th>Deltime</th>                                        
+                                        <th>Deltime</th>                                                                             
                                                                                
                                     </thead>
-                                    <tbody>                                       
-                                                                               
+                                    <tbody>
+                                        
+                                        
+                                            <% if(data && data.posts){%>
+                                                <% for(var i=0;i< data.posts.length;i++){%>
+                                                <tr>
+                                                    <td><%= data.posts[i].id %></td>
+                                                    <td><%= data.posts[i].email %></td>
+                                                    <td><%= data.posts[i].deltime %></td>                                                  
+                                                    
+                                                </tr>
+                                                <%}%>
+                                            <%}%>                                                                             
 
                                         
 
