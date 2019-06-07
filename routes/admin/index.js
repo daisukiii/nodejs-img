@@ -113,7 +113,10 @@ exports.newuser=function(req,res){
 }
 exports.newuser_1=function(req,res)
 {
-    var params=req.body;   
+    var params=req.body;  
+    
+    
+    
 
         var data=post_md.addPost(params);
         data.then(function(result){

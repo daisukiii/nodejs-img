@@ -8,7 +8,9 @@ function Post(){
                 id:$(".id").val(),
                 username:$(".username").val(),
                 email:$(".email").val(),
-                pass:$(".pass").val()
+                pass:$(".pass").val(),
+                status_user:$(".status_user").val(),
+                point_user:$(".point_user").val()
             };
             var base_url=location.protocol+"//"+document.domain+":"+location.port;
             $.ajax({
