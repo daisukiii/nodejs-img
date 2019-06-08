@@ -536,15 +536,20 @@ app.get("/test/:id", (req, res) => {
   });
 });
 // ! Middleware
-// code Hung
-app.get("/admin/listuser", admin.listuser);
-app.get("/admin/user/:id", admin.user);
+//----------------------code Hung--------------------------------------------------------------------------
+//-----signup
+app.get("/admin/signinadmin", admin.signinadmin);
+app.post("/admin/signinadmin",admin.signinadmin_);
+
+//---
+app.get("/admin/listuser", admin.listuser);           //1
+app.get("/admin/user/:id", admin.user);               //2
 app.put("/admin/user", admin.edituser);
 //app.delete("/admin/user/delete", admin.deleteuser);
-app.get("/admin/newuser", admin.newuser);
+app.get("/admin/newuser", admin.newuser);             //3
 app.post("/admin/newuser", admin.newuser_1);
-app.get("/admin/listdeleteuser",admin.listdeleteuser);
-// ---------------ham delete user--------------------------------------------------------
+app.get("/admin/listdeleteuser",admin.listdeleteuser);//4
+// ---------------ham delete user-----------------------------------
 /*app.get("/admin/listdeleteuser/:id", async (req, res) => {
   
   var id = req.params.id;
@@ -591,12 +596,18 @@ app.post("/admin/listdeleteuser/:id", async (req, res) => {
 });*/
 
 app.get("/admin/listdeleteuser/:id", async (req, res) => {
-  var id = req.params.id;
+  if(req.session.admin){
+    var id = req.params.id;
   // ! just for debug
   console.log(id);
   res.render("admin/push.ejs", {
     id: id
   });
+
+  }else{
+    res.redirect("/admin/signinadmin");
+    }
+  
 });
 
 app.post("/admin/listdeleteuser/:id", async (req, res) => {
@@ -630,7 +641,7 @@ app.post("/admin/listdeleteuser/:id", async (req, res) => {
   });
 });
 
-//----------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------
 
 
 app.listen(`${port}`, () => {

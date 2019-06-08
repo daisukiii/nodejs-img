@@ -87,6 +87,24 @@ function addPost(params){
     return false;
 
 }
+//sign in
+function getAdminByEmail(email){
+    if(email){
+        var defer=q.defer();
+        var query=db.query('SELECT * FROM admins WHERE ?',{email:email},function(err,result){
+            if(err){
+                defer.reject(err);
+            }else{
+                defer.resolve(result);
+            }
+        });
+        return defer.promise;
+    }
+
+
+    return false;
+}
+
 
 
 
@@ -96,7 +114,8 @@ module.exports={
     updatePost:updatePost,
     //deletePost:deletePost,
     addPost:addPost,
-    getAllDeletePosts:getAllDeletePosts
+    getAllDeletePosts:getAllDeletePosts,
+    getAdminByEmail:getAdminByEmail
 }
 
 
