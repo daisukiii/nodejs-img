@@ -19,8 +19,8 @@ exports.user=function(req,res){
 /// listuser
 var post_md = require("../models/post");
 exports.listuser = function (req, res) {
-
-    var data = post_md.getAllPosts();
+    if(req.session.admin){
+        var data = post_md.getAllPosts();
     data.then(function (posts) {
         var data = {
             posts: posts,
@@ -31,10 +31,19 @@ exports.listuser = function (req, res) {
     }).catch(function (err) {
         res.render("admin/listuser", { data: { error: "Get Post data is Error" } });
     });
+
+    }else{
+        res.redirect("/admin/signinadmin");
+    }
+
+    
 }
 //--------------update user
 
 exports.user=function(req,res){
+
+    if(req.session.admin){
+
     var params=req.params;
     var id=params.id;
     var data=post_md.getPostById(id);
@@ -60,23 +69,53 @@ exports.user=function(req,res){
         res.render("Admin/user",{data:data});
 
     }
+
+    }else{
+        res.redirect("/admin/signinadmin");
+    }
+
+    
+    
 };
 // status_code: http:500 loi, 200: thanhcong
 exports.edituser=function(req,res){
     var params=req.body;
     data=post_md.updatePost(params);
-    if(!data){
+    if(!data){        
         res.json({status_code:500});
     }else{
-        data.then(function(result){
-            res.json({status_code:200});
+        data.then(function(result){            
+            res.json({status_code:200});            
         }).catch(function(err){
             res.json({status_code:500});
         });
-    }
+    }    
 };
+
+exports.listdeleteuser = function (req, res) {
+
+    if(req.session.admin){
+        var data = post_md.getAllDeletePosts();
+    data.then(function (posts) {
+        var data = {
+            posts: posts,
+            error: false
+        };
+        res.render("admin/listdeleteuser", { data: data });
+
+    }).catch(function (err) {
+        res.render("admin/listdeleteuser", { data: { error: "Get Post data is Error" } });
+    });
+
+    }else{
+        res.redirect("/admin/signinadmin");
+    }    
+}
+
+
+
 //deleteuser
-exports.deleteuser=function(req,res){
+/*exports.deleteuser=function(req,res){
     var post_id=req.body.id;
     var data=post_md.deletePost(post_id);
     if(!data){
@@ -88,14 +127,21 @@ exports.deleteuser=function(req,res){
             res.json({status_code:500});
         });
     }
-};
+};*/
 //them user
 exports.newuser=function(req,res){
-    res.render("Admin/newuser",{data:{error:false}});
+    if(req.session.admin){
+        res.render("Admin/newuser",{data:{error:false}});
+    }else{
+        res.redirect("/admin/signinadmin");
+    }
+   
 }
 exports.newuser_1=function(req,res)
 {
-    var params=req.body;    
+    var params=req.body;   
+    
+    
 
         var data=post_md.addPost(params);
         data.then(function(result){
@@ -106,5 +152,44 @@ exports.newuser_1=function(req,res)
 
     });
 };
+
+//-----sign in
+exports.signinadmin=function(req,res){
+    res.render("Admin/login",{data:{error:false}});
+};
+exports.signinadmin_=function(req,res){
+    var params=req.body;
+    if(params.email.trim().length == 0){
+        res.render("Admin/login",{data:{error:"Nhập email nhé bạn"}});
+    }else
+    {
+        var data=post_md.getAdminByEmail(params.email);
+        if(data){
+            data.then(function(admin){
+                var admin=admin[0];
+                console.log(params.password);
+                console.log(admin.pass);
+                if(params.password == admin.pass)
+                {
+                    req.session.admin=admin;
+                    res.redirect("/admin/listuser");
+                }
+                else{
+                    res.render("Admin/login",{data:{error:"Password Wrong"}});
+                }                
+
+            });
+
+        }else{
+            res.render("Admin/login",{data:{error:"Admin not exists"}});
+        }
+
+
+    }
+
+
+};
+
+
     
 
