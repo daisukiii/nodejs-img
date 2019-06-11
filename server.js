@@ -540,6 +540,8 @@ app.get("/test/:id", (req, res) => {
 //-----signup
 app.get("/admin/signinadmin", admin.signinadmin);
 app.post("/admin/signinadmin",admin.signinadmin_);
+app.get("/admin/home", admin.home);
+
 
 //---
 app.get("/admin/listuser", admin.listuser);           //1
@@ -642,6 +644,106 @@ app.post("/admin/listdeleteuser/:id", async (req, res) => {
 });
 
 //----------------------------------------------------------------------------------------------------------------
+//---Code Bảo
+app.get("/admin/listphoto0", admin.listphoto0);
+app.get("/admin/listphoto1", admin.listphoto1);
+app.get("/admin/listphoto2", admin.listphoto2);
+app.get("/admin/listphotoandanh",admin.listphotoandanh);
+app.get("/admin/listdeletephoto1/:id", async (req, res) => {
+  if(req.session.admin){
+    var id = req.params.id;
+  // ! just for debug
+  console.log(id);
+  res.render("admin/push1.ejs", {
+    id: id
+  });
+
+  }else{
+    res.redirect("/admin/signinadmin");
+    }
+  
+});
+
+app.post("/admin/listdeletephoto1/:id", async (req, res) => {
+  var id = req.params.id;
+  
+  // ! just for debug
+  console.log(id);
+  await db.query(`UPDATE photos SET status_photo=2 WHERE id = ${id}`, async (err, result) => {    
+    if (err) throw err;
+    res.redirect("/admin/listphoto1");
+
+              }
+            );
+          }
+    );
+
+    app.get("/admin/listdeletephoto0/:id", async (req, res) => {
+      if(req.session.admin){
+        var id = req.params.id;
+      // ! just for debug
+      console.log(id);
+      res.render("admin/push0-2.ejs", {
+        id: id
+      });
+    
+      }else{
+        res.redirect("/admin/signinadmin");
+        }
+      
+    });
+    
+    app.post("/admin/listdeletephoto0/:id", async (req, res) => {
+      var id = req.params.id;
+      
+      // ! just for debug
+      console.log(id);
+      await db.query(`UPDATE photos SET status_photo=2 WHERE id = ${id}`, async (err, result) => {    
+        if (err) throw err;
+        res.redirect("/admin/listphoto0");
+    
+                  }
+                );
+              }
+        );
+
+app.get("/admin/listduyetphoto0/:id", async (req, res) => {
+      if(req.session.admin){
+        var id = req.params.id;
+      // ! just for debug
+      console.log(id);
+      res.render("admin/push0-1.ejs", {
+        id: id
+      });  
+    
+      }else{
+        res.redirect("/admin/signinadmin");
+        }
+      
+    });
+    
+    app.post("/admin/listduyetphoto0/:id", async (req, res) => {
+      var id = req.params.id;
+      
+      // ! just for debug
+      console.log(id);
+      await db.query(`UPDATE photos SET status_photo=1 WHERE id = ${id}`, async (err, result) => {    
+        if (err) throw err;
+        res.redirect("/admin/listphoto0");
+    
+                  }
+                );
+              }
+        );
+
+
+
+
+
+
+    
+
+
 
 
 app.listen(`${port}`, () => {
