@@ -539,18 +539,18 @@ app.get("/test/:id", (req, res) => {
 //----------------------code Hung--------------------------------------------------------------------------
 //-----signup
 app.get("/admin/signinadmin", admin.signinadmin);
-app.post("/admin/signinadmin",admin.signinadmin_);
+app.post("/admin/signinadmin", admin.signinadmin_);
 app.get("/admin/home", admin.home);
 
 
 //---
-app.get("/admin/listuser", admin.listuser);           //1
-app.get("/admin/user/:id", admin.user);               //2
+app.get("/admin/listuser", admin.listuser); //1
+app.get("/admin/user/:id", admin.user); //2
 app.put("/admin/user", admin.edituser);
 //app.delete("/admin/user/delete", admin.deleteuser);
-app.get("/admin/newuser", admin.newuser);             //3
+app.get("/admin/newuser", admin.newuser); //3
 app.post("/admin/newuser", admin.newuser_1);
-app.get("/admin/listdeleteuser",admin.listdeleteuser);//4
+app.get("/admin/listdeleteuser", admin.listdeleteuser); //4
 // ---------------ham delete user-----------------------------------
 /*app.get("/admin/listdeleteuser/:id", async (req, res) => {
   
@@ -598,18 +598,18 @@ app.post("/admin/listdeleteuser/:id", async (req, res) => {
 });*/
 
 app.get("/admin/listdeleteuser/:id", async (req, res) => {
-  if(req.session.admin){
+  if (req.session.admin) {
     var id = req.params.id;
-  // ! just for debug
-  console.log(id);
-  res.render("admin/push.ejs", {
-    id: id
-  });
+    // ! just for debug
+    console.log(id);
+    res.render("admin/push.ejs", {
+      id: id
+    });
 
-  }else{
+  } else {
     res.redirect("/admin/signinadmin");
-    }
-  
+  }
+
 });
 
 app.post("/admin/listdeleteuser/:id", async (req, res) => {
@@ -648,100 +648,94 @@ app.post("/admin/listdeleteuser/:id", async (req, res) => {
 app.get("/admin/listphoto0", admin.listphoto0);
 app.get("/admin/listphoto1", admin.listphoto1);
 app.get("/admin/listphoto2", admin.listphoto2);
-app.get("/admin/listphotoandanh",admin.listphotoandanh);
+app.get("/admin/listphotoandanh", admin.listphotoandanh);
 app.get("/admin/listdeletephoto1/:id", async (req, res) => {
-  if(req.session.admin){
+  if (req.session.admin) {
     var id = req.params.id;
-  // ! just for debug
-  console.log(id);
-  res.render("admin/push1.ejs", {
-    id: id
-  });
+    // ! just for debug
+    console.log(id);
+    res.render("admin/push1.ejs", {
+      id: id
+    });
 
-  }else{
+  } else {
     res.redirect("/admin/signinadmin");
-    }
-  
+  }
+
 });
 
 app.post("/admin/listdeletephoto1/:id", async (req, res) => {
   var id = req.params.id;
-  
+
   // ! just for debug
   console.log(id);
-  await db.query(`UPDATE photos SET status_photo=2 WHERE id = ${id}`, async (err, result) => {    
+  await db.query(`UPDATE photos SET status_photo=2 WHERE id = ${id}`, async (err, result) => {
     if (err) throw err;
     res.redirect("/admin/listphoto1");
 
-              }
-            );
-          }
-    );
+  });
+});
 
-    app.get("/admin/listdeletephoto0/:id", async (req, res) => {
-      if(req.session.admin){
-        var id = req.params.id;
-      // ! just for debug
-      console.log(id);
-      res.render("admin/push0-2.ejs", {
-        id: id
-      });
-    
-      }else{
-        res.redirect("/admin/signinadmin");
-        }
-      
+app.get("/admin/listdeletephoto0/:id", async (req, res) => {
+  if (req.session.admin) {
+    var id = req.params.id;
+    // ! just for debug
+    console.log(id);
+    res.render("admin/push0-2.ejs", {
+      id: id
     });
-    
-    app.post("/admin/listdeletephoto0/:id", async (req, res) => {
-      var id = req.params.id;
-      
-      // ! just for debug
-      console.log(id);
-      await db.query(`UPDATE photos SET status_photo=2 WHERE id = ${id}`, async (err, result) => {    
-        if (err) throw err;
-        res.redirect("/admin/listphoto0");
-    
-                  }
-                );
-              }
-        );
+
+  } else {
+    res.redirect("/admin/signinadmin");
+  }
+
+});
+
+app.post("/admin/listdeletephoto0/:id", async (req, res) => {
+  var id = req.params.id;
+
+  // ! just for debug
+  console.log(id);
+  await db.query(`UPDATE photos SET status_photo=2 WHERE id = ${id}`, async (err, result) => {
+    if (err) throw err;
+    res.redirect("/admin/listphoto0");
+
+  });
+});
 
 app.get("/admin/listduyetphoto0/:id", async (req, res) => {
-      if(req.session.admin){
-        var id = req.params.id;
-      // ! just for debug
-      console.log(id);
-      res.render("admin/push0-1.ejs", {
-        id: id
-      });  
-    
-      }else{
-        res.redirect("/admin/signinadmin");
-        }
-      
+  if (req.session.admin) {
+    var id = req.params.id;
+    // ! just for debug
+    console.log(id);
+    res.render("admin/push0-1.ejs", {
+      id: id
     });
-    
-    app.post("/admin/listduyetphoto0/:id", async (req, res) => {
-      var id = req.params.id;
-      
-      // ! just for debug
-      console.log(id);
-      await db.query(`UPDATE photos SET status_photo=1 WHERE id = ${id}`, async (err, result) => {    
-        if (err) throw err;
-        res.redirect("/admin/listphoto0");
-    
-                  }
-                );
-              }
-        );
+
+  } else {
+    res.redirect("/admin/signinadmin");
+  }
+
+});
+
+app.post("/admin/listduyetphoto0/:id", async (req, res) => {
+  var id = req.params.id;
+
+  // ! just for debug
+  console.log(id);
+  await db.query(`UPDATE photos SET status_photo=1 WHERE id = ${id}`, async (err, result) => {
+    if (err) throw err;
+    res.redirect("/admin/listphoto0");
+
+  });
+});
 
 
 
 
 
 
-    
+
 
 
 
