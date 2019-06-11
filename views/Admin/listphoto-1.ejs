@@ -29,8 +29,6 @@
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
-
-
     <!--      csss           -->
     <link rel="stylesheet" type="text/css" href="/static/admin/animate.min.css">
     <link rel="stylesheet" type="text/css" href="/static/admin/bootstrap.min.css">
@@ -50,45 +48,51 @@
     <script type="text/javascript" src="/static/admin/post.js"></script>
 
 
-    
+
+
+
+
+
+
 </head>
 <body>
 
     <div class="wrapper">
-        <div class="sidebar" data-color="purple" data-image="assets/img/sidebar-5.jpg">
-    
-        <!--   you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple" -->
-    
-    
-        <div class="sidebar-wrapper">
-            <div class="logo">
-                <a class="simple-text">
-                    Captain America
-                </a>
-            </div>
-    
-            <ul class="nav">
-                <li >
-                    <a href="/admin/home">
-                        <i class="pe-7s-graph"></i>
-                        <p>Dashboard</p>
-                    </a>
-                </li>
-                <li class="active">
-                    <a href="/admin/listuser">
-                        <i class="pe-7s-note2"></i>
-                        <p>Danh sách người dùng</p>
-                    </a>
-                </li>
-                <li>
-                        <a href="/admin/listphoto1">
-                            <i class="pe-7s-note2"></i>
-                            <p>Danh sách Ảnh</p>
-                        </a>
-                    </li>
-            </ul>
+    <div class="sidebar" data-color="purple" data-image="assets/img/sidebar-5.jpg">
+
+    <!--   you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple" -->
+
+
+    <div class="sidebar-wrapper">
+        <div class="logo">
+            <a class="simple-text">
+                Captain America
+            </a>
         </div>
+
+        <ul class="nav">
+            <li >
+                <a href="/admin/home">
+                    <i class="pe-7s-graph"></i>
+                    <p>Dashboard</p>
+                </a>
+            </li>
+            <li >
+                <a href="/admin/listuser">
+                    <i class="pe-7s-note2"></i>
+                    <p>Danh sách người dùng</p>
+                </a>
+            </li>
+            <li class="active">
+                    <a href="/admin/listphoto1">
+                        <i class="pe-7s-note2"></i>
+                        <p>Danh sách Ảnh</p>
+                    </a>
+                </li>
+        </ul>
     </div>
+</div>
+
 <div class="main-panel">
     <nav class="navbar navbar-default navbar-fixed">
         <div class="container-fluid">
@@ -169,104 +173,102 @@
         </div>
     </nav>
 
-
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-8">
-                        <div class="card">
-                            <div class="header">
-                                <h4 class="title">Chỉnh sửa Thông tin</h4>
-                            </div>
-                            <div class="content">
-                                <form method="" action="">
-                                    <input class="id" type="hidden" name="id" value="<% if (data && data.post){%><%= data.post.id %><%}%>">
-                                    <div class="row">
-                                        
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>UserName</label>
-                                                <input type="text" class="form-control username" placeholder="username" value=
-                                                "<% if (data && data.post){%><%= data.post.username %><%}%>">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Địa chỉ Email</label>
-                                                <input type="email" class="form-control email" placeholder="email" value=
-                                                "<% if (data && data.post){%><%= data.post.email %><%}%>">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Mật khẩu</label>
-                                                    <input type="text" class="form-control pass" placeholder="pass" value=
-                                                    "<% if (data && data.post){%><%= data.post.pass %><%}%>">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>STATUS_USER</label>
-                                                    <input type="text" class="form-control status_user" placeholder="status_user" value=
-                                                    "<% if (data && data.post){%><%= data.post.status_user %><%}%>">
-                                                </div>
-                                            </div>
-                                    </div>
+                    <div class="conl-md-12">
+                        <a href="/admin/listphoto2" class="btn btn-success pull-right">DANH SÁCH PHOTO ĐÃ XÓA</a>
+                    
 
-                                    <div class="row">                                        
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>POINT_USER</label>
-                                                <input type="text" class="form-control point_user" placeholder="point_user" value=
-                                                "<% if (data && data.post){%><%= data.post.point_user %><%}%>">
-                                            </div>
-                                        </div>
-                                </div>
-
-                                   <!--- <button type="submit" class="btn btn-info btn-fill pull-left">Xóa người dùng</button>   -->
-                                    <button type="button" value="Edit" class="btn btn-info btn-fill pull-right post_edit">Edit</button>
-                                    <div class="clearfix"></div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card card-user">
-                            <div class="image">
-                                <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="..."/>
-                            </div>
-                            <div class="content">
-                                <div class="author">
-                                     <a href="#">
-                                    <img class="avatar border-gray" src="assets/img/faces/face-3.jpg" alt="..."/>
-
-                                      <h4 class="title">Mike Andrew<br />
-                                         <small>michael24</small>
-                                      </h4>
-                                    </a>
-                                </div>
-                                <p class="description text-center"> "Lamborghini Mercy <br>
-                                                    Your chick she so thirsty <br>
-                                                    I'm in that two seat Lambo"
-                                </p>
-                            </div>
-                            <hr>
-                            <div class="text-center">
-                                <button href="#" class="btn btn-simple"><i class="fa fa-facebook-square"></i></button>
-                                <button href="#" class="btn btn-simple"><i class="fa fa-twitter"></i></button>
-                                <button href="#" class="btn btn-simple"><i class="fa fa-google-plus-square"></i></button>
-
-                            </div>
-                        </div>
                     </div>
 
                 </div>
+                <br>
+
+                <div class="row">
+                    <div class="conl-md-12">
+                        <a href="/admin/listphoto0" class="btn btn-success pull-right">DANH SÁCH PHOTO CHƯA DUYỆT</a>
+                    
+
+                    </div>
+
+                </div>
+
+                <br>
+                <div class="row">
+                    <div class="conl-md-12">
+                        <a href="/admin/listphotoandanh" class="btn btn-success pull-right">DANH SÁCH PHOTO Ẩn Danh</a>
+                    
+
+                    </div>
+
+                </div>
+                <br>
+                
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="header">
+                                <div class="col-md-8">
+                                    <h4 class="title">DANH SÁCH PHOTO ĐÃ DUYỆT</h4>
+                                    <p class="category">Cập nhật 3 phút trước</p>
+                                    </div>
+                                    <div class="col-md-4">                                                         
+                                <p><input type="text"></input>
+                                <button type="submit" class="btn btn-info btn-fill">Tìm kiếm</button>
+                                </p>
+                                </div>
+                            </div>
+                            <div class="content table-responsive table-full-width">
+                                <table class="table table-hover table-striped">
+                                    <thead>
+                                        <th>ID</th>                                       
+                                    	
+                                    	<th>Title</th>
+                                        <th>Id_user</th>
+                                        <th>status_photo</th>
+                                        <th>Images_description</th>
+                                        <th>Images_url</th>
+                                                                               
+                                    </thead>
+                                    <tbody>
+                                       
+                                        <% if(data && data.posts){%>
+                                            <% for(var i=0;i< data.posts.length;i++){%>
+                                            <tr>
+                                                
+                                                
+                                                <td><%= data.posts[i].id %></td>
+                                                <td><%= data.posts[i].title %></td>
+                                                <td><%= data.posts[i].id_user %></td>
+                                                <td><%= data.posts[i].status_photo %></td>
+                                                <td><%= data.posts[i].images_description %></td>
+                                                <td><%= data.posts[i].images_url %></td> 
+                                                <td>
+                                                    
+                                                    <a href="/admin/listdeletephoto1/<%=data.posts[i].id %>" class="btn btn-danger">
+                                                        Xóa </a>
+                                                    
+                                                </td>
+                                            </tr>
+                                            <%}%>
+                                            
+                                        <%}%>
+                                                                               
+
+                                        
+
+                                    </tbody>
+                                    
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
 
         <footer class="footer">
             <div class="container-fluid">
@@ -300,6 +302,7 @@
             </div>
         </footer>
 
+
     </div>
 </div>
 
@@ -324,5 +327,6 @@
 
 	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 	<script src="assets/js/demo.js"></script>
+
 
 </html>
