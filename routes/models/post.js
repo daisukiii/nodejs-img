@@ -11,6 +11,18 @@ function getAllPosts(){
     });
     return defer.promise;
 }
+
+function getAllPhoto(){
+    var defer=q.defer();
+    var query=db.query('SELECT * FROM photos', function(err,posts){
+        if(err){
+            defer.reject(err);            
+        }else{
+            defer.resolve(posts);
+        }
+    });
+    return defer.promise;
+}
 //update user
 function getPostById(id){
     var defer=q.defer();
@@ -161,6 +173,7 @@ function getAllPhotoandanh(){
 
 module.exports={
     getAllPosts:getAllPosts,
+    getAllPhoto:getAllPhoto,
     getPostById:getPostById,
     updatePost:updatePost,
     //deletePost:deletePost,
