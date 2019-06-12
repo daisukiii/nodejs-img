@@ -58,40 +58,40 @@
 <body>
 
     <div class="wrapper">
-        <div class="sidebar" data-color="purple" data-image="assets/img/sidebar-5.jpg">
-    
-        <!--   you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple" -->
-    
-    
-        <div class="sidebar-wrapper">
-            <div class="logo">
-                <a class="simple-text">
-                    Captain America
-                </a>
-            </div>
-    
-            <ul class="nav">
-                <li >
-                    <a href="/admin/home">
-                        <i class="pe-7s-graph"></i>
-                        <p>Dashboard</p>
-                    </a>
-                </li>
-                <li class="active">
-                    <a href="/admin/listuser">
-                        <i class="pe-7s-note2"></i>
-                        <p>Danh sách người dùng</p>
-                    </a>
-                </li>
-                <li>
-                        <a href="/admin/listphoto1">
-                            <i class="pe-7s-note2"></i>
-                            <p>Danh sách Ảnh</p>
-                        </a>
-                    </li>
-            </ul>
+    <div class="sidebar" data-color="purple" data-image="assets/img/sidebar-5.jpg">
+
+    <!--   you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple" -->
+
+
+    <div class="sidebar-wrapper">
+        <div class="logo">
+            <a class="simple-text">
+                Captain America
+            </a>
         </div>
+
+        <ul class="nav">
+            <li >
+                <a href="/admin/home">
+                    <i class="pe-7s-graph"></i>
+                    <p>Dashboard</p>
+                </a>
+            </li>
+            <li >
+                <a href="/admin/listuser">
+                    <i class="pe-7s-note2"></i>
+                    <p>Danh sách người dùng</p>
+                </a>
+            </li>
+            <li class="active">
+                    <a href="/admin/listphoto1">
+                        <i class="pe-7s-note2"></i>
+                        <p>Danh sách Ảnh</p>
+                    </a>
+                </li>
+        </ul>
     </div>
+</div>
 
 <div class="main-panel">
     <nav class="navbar navbar-default navbar-fixed">
@@ -177,7 +177,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="conl-md-12">
-                        <a href="/admin/newuser" class="btn btn-success pull-right">Thêm USER</a>
+                        <a href="/admin/listphoto2" class="btn btn-success pull-right">DANH SÁCH PHOTO ĐÃ XÓA</a>
                     
 
                     </div>
@@ -187,13 +187,22 @@
 
                 <div class="row">
                     <div class="conl-md-12">
-                        <a href="/admin/listdeleteuser" class="btn btn-success pull-right">DANH SÁCH USER BỊ XÓA</a>
+                        <a href="/admin/listphoto0" class="btn btn-success pull-right">DANH SÁCH PHOTO CHƯA DUYỆT</a>
                     
 
                     </div>
 
                 </div>
 
+                <br>
+                <div class="row">
+                    <div class="conl-md-12">
+                        <a href="/admin/listphotoandanh" class="btn btn-success pull-right">DANH SÁCH PHOTO Ẩn Danh</a>
+                    
+
+                    </div>
+
+                </div>
                 <br>
                 
 
@@ -202,7 +211,7 @@
                         <div class="card">
                             <div class="header">
                                 <div class="col-md-8">
-                                    <h4 class="title">Danh sách người dùng đã đăng kí</h4>
+                                    <h4 class="title">DANH SÁCH PHOTO ĐÃ DUYỆT</h4>
                                     <p class="category">Cập nhật 3 phút trước</p>
                                     </div>
                                     <div class="col-md-4">                                                         
@@ -214,14 +223,13 @@
                             <div class="content table-responsive table-full-width">
                                 <table class="table table-hover table-striped">
                                     <thead>
-                                        <th>ID</th>
-                                       
-                                    	<th>UserName</th>
-                                    	<th>Email</th>
-                                        <th>Pass</th>
-                                        <th>status_user</th>
-                                        <th>point_user</th>
-                                        <th>avatar_url</th>
+                                        <th>ID</th>                                       
+                                    	
+                                    	<th>Title</th>
+                                        <th>Id_user</th>
+                                        <th>status_photo</th>
+                                        <th>Images_description</th>
+                                        <th>Images_url</th>
                                                                                
                                     </thead>
                                     <tbody>
@@ -229,24 +237,23 @@
                                         <% if(data && data.posts){%>
                                             <% for(var i=0;i< data.posts.length;i++){%>
                                             <tr>
-                                                <% if(data.posts[i].status_user ==0){%>
+                                                
                                                 
                                                 <td><%= data.posts[i].id %></td>
-                                                <td><%= data.posts[i].username %></td>
-                                                <td><%= data.posts[i].email %></td>
-                                                <td><%= data.posts[i].pass %></td>
-                                                <td><%= data.posts[i].status_user %></td>
-                                                <td><%= data.posts[i].point_user %></td>
-                                                <td><%= data.posts[i].avatar_url %></td>
+                                                <td><%= data.posts[i].title %></td>
+                                                <td><%= data.posts[i].id_user %></td>
+                                                <td><%= data.posts[i].status_photo %></td>
+                                                <td><%= data.posts[i].images_description %></td>
+                                                <td><%= data.posts[i].images_url %></td> 
                                                 <td>
-                                                    <a href="/admin/user/<%=data.posts[i].id %>" class="btn btn-primary"> Edit </a>
-                                                    <a href="/admin/listdeleteuser/<%=data.posts[i].id %>" class="btn btn-danger">
-                                                        Delete </a>
+                                                    
+                                                    <a href="/admin/listdeletephoto1/<%=data.posts[i].id %>" class="btn btn-danger">
+                                                        Xóa </a>
                                                     
                                                 </td>
                                             </tr>
                                             <%}%>
-                                            <%}%>
+                                            
                                         <%}%>
                                                                                
 

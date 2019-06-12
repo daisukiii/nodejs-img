@@ -218,9 +218,98 @@ exports.signinadmin_=function(req,res){
 
 
     }
-
-
 };
+//tro ve HOME
+exports.home=function(req,res)
+{
+    if(req.session.admin){
+        res.render("Admin/dashboard",{data:{error:false}});
+    }else{
+        res.redirect("/admin/signinadmin");
+    }
+}
+
+//listphoto---0
+exports.listphoto0 = function (req, res) {
+    if(req.session.admin){
+        var data = post_md.getAllPhoto0();
+    data.then(function (posts) {
+        var data = {
+            posts: posts,
+            error: false
+        };
+        res.render("admin/listphoto-0", { data: data });
+
+    }).catch(function (err) {
+        res.render("admin/listphoto-0", { data: { error: "Get Post data is Error" } });
+    });
+
+    }else{
+        res.redirect("/admin/signinadmin");
+    }
+    
+}
+//listphoto---1
+exports.listphoto1 = function (req, res) {
+    if(req.session.admin){
+        var data = post_md.getAllPhoto1();
+    data.then(function (posts) {
+        var data = {
+            posts: posts,
+            error: false
+        };
+        res.render("admin/listphoto-1", { data: data });
+
+    }).catch(function (err) {
+        res.render("admin/listphoto-1", { data: { error: "Get Post data is Error" } });
+    });
+
+    }else{
+        res.redirect("/admin/signinadmin");
+    }
+    
+}
+////listphoto---2
+exports.listphoto2 = function (req, res) {
+    if(req.session.admin){
+        var data = post_md.getAllPhoto2();
+    data.then(function (posts) {
+        var data = {
+            posts: posts,
+            error: false
+        };
+        res.render("admin/listphoto-2", { data: data });
+
+    }).catch(function (err) {
+        res.render("admin/listphoto-2", { data: { error: "Get Post data is Error" } });
+    });
+
+    }else{
+        res.redirect("/admin/signinadmin");
+    }
+    
+}
+//listphotoandanh
+exports.listphotoandanh = function (req, res) {
+    if(req.session.admin){
+        var data = post_md.getAllPhotoandanh();
+    data.then(function (posts) {
+        var data = {
+            posts: posts,
+            error: false
+        };
+        res.render("admin/listphoto-andanh", { data: data });
+
+    }).catch(function (err) {
+        res.render("admin/listphoto-andanh", { data: { error: "Get Post data is Error" } });
+    });
+
+    }else{
+        res.redirect("/admin/signinadmin");
+    }
+    
+}
+
 
 
     

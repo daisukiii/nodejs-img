@@ -116,6 +116,57 @@ function getAdminByEmail(email){
 
     return false;
 }
+//listphoto0
+
+function getAllPhoto0(){
+    var defer=q.defer();
+    var query=db.query('SELECT * FROM photos WHERE status_photo=0', function(err,posts){
+        if(err){
+            defer.reject(err);            
+        }else{
+            defer.resolve(posts);
+        }
+    });
+    return defer.promise;
+}
+
+function getAllPhoto1(){
+    var defer=q.defer();
+    var query=db.query('SELECT * FROM photos WHERE status_photo=1', function(err,posts){
+        if(err){
+            defer.reject(err);            
+        }else{
+            defer.resolve(posts);
+        }
+    });
+    return defer.promise;
+}
+
+function getAllPhoto2(){
+    var defer=q.defer();
+    var query=db.query('SELECT * FROM photos WHERE status_photo=2', function(err,posts){
+        if(err){
+            defer.reject(err);            
+        }else{
+            defer.resolve(posts);
+        }
+    });
+    return defer.promise;
+}
+
+function getAllPhotoandanh(){
+    var defer=q.defer();
+    var query=db.query('SELECT * FROM photos_any', function(err,posts){
+        if(err){
+            defer.reject(err);            
+        }else{
+            defer.resolve(posts);
+        }
+    });
+    return defer.promise;
+}
+
+
 
 
 
@@ -128,7 +179,11 @@ module.exports={
     //deletePost:deletePost,
     addPost:addPost,
     getAllDeletePosts:getAllDeletePosts,
-    getAdminByEmail:getAdminByEmail
+    getAdminByEmail:getAdminByEmail,
+    getAllPhoto0:getAllPhoto0,
+    getAllPhoto1:getAllPhoto1,
+    getAllPhoto2:getAllPhoto2,
+    getAllPhotoandanh:getAllPhotoandanh
 }
 
 
