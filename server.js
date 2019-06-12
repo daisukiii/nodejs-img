@@ -570,11 +570,9 @@ app.get("/admin/listdeleteuser",admin.listdeleteuser);//4
             if(err) throw err;            
           }
         );        
-
       }
     );     
 });
-
 app.post("/admin/listdeleteuser/:id", async (req, res) => {
   
   var id = req.params.id;
