@@ -5,7 +5,7 @@
 	<link rel="icon" type="image/png" href="assets/img/favicon.ico">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>Light Bootstrap Dashboard by Creative Tim</title>
+	<title>Danh sách User</title>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -29,6 +29,31 @@
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+    <!--      csss           -->
+    <link rel="stylesheet" type="text/css" href="/static/admin/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/admin/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/admin/demo.css">
+    <link rel="stylesheet" type="text/css" href="/static/admin/light-bootstrap-dashboard.css">
+    <link rel="stylesheet" type="text/css" href="/static/admin/pe-icon-7-stroke.css">
+     <!--      js           -->
+
+
+    <script type="text/javascript" src="/static/admin/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/admin/bootstrap-notify.js"></script>
+    <script type="text/javascript" src="/static/admin/bootstrap-select.js"></script>
+    <script type="text/javascript" src="/static/admin/chartist.min.js"></script>
+    <script type="text/javascript" src="/static/admin/demo.js"></script>
+    <script type="text/javascript" src="/static/admin/jquery.3.2.1.min.js"></script>
+    <script type="text/javascript" src="/static/admin/light-bootstrap-dashboard.js"></script>
+    <script type="text/javascript" src="/static/admin/post.js"></script>
+
+
+
+
+
+
+
+
 </head>
 <body>
 
@@ -47,47 +72,23 @@
 
         <ul class="nav">
             <li >
-                <a href="dashboard.html">
+                <a href="/admin/home">
                     <i class="pe-7s-graph"></i>
                     <p>Dashboard</p>
                 </a>
             </li>
-            <li>
-                <a href="user.html">
-                    <i class="pe-7s-user"></i>
-                    <p>Thông tin người dùng</p>
-                </a>
-            </li>
-            <li>
-                <a href="listuser.html">
+            <li >
+                <a href="/admin/listuser">
                     <i class="pe-7s-note2"></i>
                     <p>Danh sách người dùng</p>
                 </a>
             </li>
-            <li>
-                <a href="admin.html">
-                    <i class="pe-7s-user"></i>
-                    <p>Thông tin Admin</p>
-                </a>
-            </li>
             <li class="active">
-                    <a href="listPHOTO.html">
+                    <a href="/admin/listPHOTO">
                         <i class="pe-7s-note2"></i>
                         <p>Danh sách Ảnh</p>
                     </a>
                 </li>
-            <li>
-                <a href="thongbao.html">
-                    <i class="pe-7s-bell"></i>
-                    <p>Thông báo</p>
-                </a>
-            </li>
-            <li class="active-pro">
-                <a href="upgrade.html">
-                    <i class="pe-7s-rocket"></i>
-                    <p>Upgrade to PRO</p>
-                </a>
-            </li>
         </ul>
     </div>
 </div>
@@ -102,7 +103,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Dashboard</a>
+                <a class="navbar-brand" href="#">Danh sách Ảnh</a>
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-left">
@@ -175,15 +176,37 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
+                    <div class="conl-md-12">
+                        <a href="/admin/newuser" class="btn btn-success pull-right">Thêm USER</a>
+                    
+
+                    </div>
+
+                </div>
+                <br>
+
+                <div class="row">
+                    <div class="conl-md-12">
+                        <a href="/admin/listdeletephoto" class="btn btn-success pull-right">DANH SÁCH PHOTO BỊ XÓA</a>
+                    
+
+                    </div>
+
+                </div>
+
+                <br>
+                
+
+                <div class="row">
                     <div class="col-md-12">
                         <div class="card">
                             <div class="header">
                                 <div class="col-md-8">
-                                    <h4 class="title">Danh sách Ảnh do Người dùng đăng tải</h4>
+                                    <h4 class="title">Danh sách Ảnh đã duyệt</h4>
                                     <p class="category">Cập nhật 3 phút trước</p>
                                     </div>
                                     <div class="col-md-4">                                                         
-                                <p><input type="text"</input>
+                                <p><input type="text"></input>
                                 <button type="submit" class="btn btn-info btn-fill">Tìm kiếm</button>
                                 </p>
                                 </div>
@@ -192,20 +215,42 @@
                                 <table class="table table-hover table-striped">
                                     <thead>
                                         <th>ID</th>
-                                    	<th>Tiêu đề</th>
-                                    	<th>ID Người dùng</th>
-                                        <th>URL</th>
-                                        <th>...</th>
+                                       
+                                    	<th>Title</th>
+                                    	<th>ID_user</th>
+                                        <th>Status_photo</th>
+                                        <th>Images_description</th>
+                                        <th>Images_url</th>
+                                                                               
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                        	<td>1</td>
-                                        	<td>Động vật</td>
-                                        	<td>1</td>
-                                            <td><a href="testPHOTO.html" target="blank">abc.xyz</a></td>
-                                            <td><a href="">Xóa</a></td>
-                                        </tr>
+                                       
+                                        <% if(data && data.posts){%>
+                                            <% for(var i=0;i< data.posts.length;i++){%>
+                                            <tr>
+                                                <% if(data.posts[i].status_photo ==1){%>
+                                                
+                                                <td><%= data.posts[i].id %></td>
+                                                <td><%= data.posts[i].title %></td>
+                                                <td><%= data.posts[i].id_user %></td>
+                                                <td><%= data.posts[i].status_photo %></td>
+                                                <td><%= data.posts[i].images_description %></td>
+                                                <td><%= data.posts[i].images_url %></td>
+                                                <td>
+                                                    <a href="/admin/listdeletephoto/<%=data.posts[i].id %>" class="btn btn-danger">
+                                                        Xóa </a>
+                                                    
+                                                </td>
+                                            </tr>
+                                            <%}%>
+                                            <%}%>
+                                        <%}%>
+                                                                               
+
+                                        
+
                                     </tbody>
+                                    
                                 </table>
 
                             </div>
@@ -242,7 +287,7 @@
                     </ul>
                 </nav>
                 <p class="copyright pull-right">
-                    &copy; <script>document.write(new Date().getFullYear())</script> <a href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
+                    &copy; <script>document.write(new Date().getFullYear())</script> <a href="">Captain America</a>, Đội trưởng Mỹ
                 </p>
             </div>
         </footer>

@@ -5,7 +5,7 @@
 	<link rel="icon" type="image/png" href="assets/img/favicon.ico">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>Light Bootstrap Dashboard by Creative Tim</title>
+	<title>Trang chủ</title>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -13,6 +13,22 @@
 
     <!-- Bootstrap core CSS     -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="/static/admin/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/admin/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/admin/demo.css">
+    <link rel="stylesheet" type="text/css" href="/static/admin/light-bootstrap-dashboard.css">
+    <link rel="stylesheet" type="text/css" href="/static/admin/pe-icon-7-stroke.css">
+    <link rel="image" type="image/png" href="/static/img"
+    <!--      js           -->
+
+    <script type="text/javascript" src="/static/admin/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/admin/bootstrap-notify.js"></script>
+    <script type="text/javascript" src="/static/admin/bootstrap-select.js"></script>
+    <script type="text/javascript" src="/static/admin/chartist.min.js"></script>
+    <script type="text/javascript" src="/static/admin/demo.js"></script>
+    <script type="text/javascript" src="/static/admin/jquery.3.2.1.min.js"></script>
+    <script type="text/javascript" src="/static/admin/light-bootstrap-dashboard.js"></script>
+    <script type="text/javascript" src="/static/admin/post.js"></script>
 
     <!-- Animation library for notifications   -->
     <link href="assets/css/animate.min.css" rel="stylesheet"/>
@@ -52,47 +68,23 @@
 
         <ul class="nav">
             <li class="active">
-                <a href="dashboard.html">
+                <a href="/admin/home">
                     <i class="pe-7s-graph"></i>
                     <p>Dashboard</p>
                 </a>
             </li>
-            <li>
-                <a href="user.html">
-                    <i class="pe-7s-user"></i>
-                    <p>Thông tin người dùng</p>
-                </a>
-            </li>
-            <li>
-                <a href="listuser.html">
+            <li >
+                <a href="/admin/listuser">
                     <i class="pe-7s-note2"></i>
                     <p>Danh sách người dùng</p>
                 </a>
             </li>
             <li>
-                <a href="admin.html">
-                    <i class="pe-7s-user"></i>
-                    <p>Thông tin Admin</p>
-                </a>
-            </li>
-            <li>
-                    <a href="listPHOTO.html">
+                    <a href="/admin/listPHOTO">
                         <i class="pe-7s-note2"></i>
                         <p>Danh sách Ảnh</p>
                     </a>
                 </li>
-            <li>
-                <a href="thongbao.html">
-                    <i class="pe-7s-bell"></i>
-                    <p>Thông báo</p>
-                </a>
-            </li>
-            <li class="active-pro">
-                <a href="upgrade.html">
-                    <i class="pe-7s-rocket"></i>
-                    <p>Upgrade to PRO</p>
-                </a>
-            </li>
         </ul>
     </div>
 </div>
@@ -185,21 +177,21 @@
                         <div class="card">
 
                             <div class="header">
-                                <h4 class="title">Thống kê Email</h4>
-                                <p class="category">Hiệu suất</p>
+                                <h4 class="title">Thống kê Tài khoản User</h4>
+                                <p class="category">Trạng thái</p>
                             </div>
                             <div class="content">
-                                <div id="chartPreferences" class="ct-chart ct-perfect-fourth"></div>
-
-                                <div class="footer">
+                                <div align="center">
+                                    <img src="/static/img/Capture1.JPG" style="width:280px;height:250px;" alt="huhu">
+                                </div>
+                                    <div class="footer">
                                     <div class="legend">
-                                        <i class="fa fa-circle text-info"></i> Khả dụng
-                                        <i class="fa fa-circle text-danger"></i> Không khả dụng
-                                        <i class="fa fa-circle text-warning"></i> Hủy đăng ký
+                                        <i class="fa fa-circle text-info"></i> Khả dụng <br>
+                                        <i class="fa fa-circle text-danger"></i> Không khả dụng  <br>
                                     </div>
                                     <hr>
                                     <div class="stats">
-                                        <i class="fa fa-clock-o"></i> Thống kê 2 ngày trước
+                                        <i class="fa fa-clock-o"></i> Thống kê 1 phút trước
                                     </div>
                                 </div>
                             </div>
@@ -209,17 +201,33 @@
                     <div class="col-md-8">
                         <div class="card">
                             <div class="header">
-                                <h4 class="title">Tần suất sử dụng</h4>
-                                <p class="category">Hiệu suất trên 24 giờ</p>
+                                <h4 class="title">Số lượng Ảnh</h4>
+                                <p class="category">Thống kê</p>
                             </div>
                             <div class="content">
-                                <div id="chartHours" class="ct-chart"></div>
-                                <div class="footer">
-                                    <div class="legend">
-                                        <i class="fa fa-circle text-info"></i> Mở trang
-                                        <i class="fa fa-circle text-danger"></i> Nhấp chuột
-                                        <i class="fa fa-circle text-warning"></i> Nhấp chuột lần hai
+                                <div class="row">
+                                <div class="col-md-6">
+                                    <div align="left">
+                                            <img src="/static/img/Capture.JPG" style="width:300px;height:250px;" alt="huhu">
+                                        </div>
+                                        <p><center>   User đăng</center></p>
                                     </div>
+                                    <div class="col-md-6">
+                                            <div align="right">
+                                                    <img src="/static/img/Capture3.JPG" style="width:300px;height:250px;" alt="huhu">
+                                                </div>
+                                                <p><center>Đăng ẩn danh</center></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                <div class="footer">
+                                        <div style="padding-left: 300px">                                                                     
+                                        <i class="fa fa-circle text-info" ></i> Đã duyệt <br>
+                                        <i class="fa fa-circle text-danger"></i> Chưa duyệt <br>
+                                        <i class="fa fa-circle text-warning"></i> Đã xóa<br>
+                                    </div>
+                                </div>
+                            </div>
                                     <hr>
                                     <div class="stats">
                                         <i class="fa fa-history"></i> Cập nhật 3 phút trước

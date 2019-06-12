@@ -38,6 +38,38 @@ exports.listuser = function (req, res) {
 
     
 }
+//home
+exports.home = function(req, res) {
+    if(req.session.admin){
+
+        res.render("Admin/dashboard",{data:{error:false}});
+
+    }else{
+        res.redirect("/admin/signinadmin");
+    }
+}
+
+var post_md = require("../models/post");
+exports.listphoto = function (req, res) {
+    if(req.session.admin){
+        var data = post_md.getAllPhoto();
+    data.then(function (posts) {
+        var data = {
+            posts: posts,
+            error: false
+        };
+        res.render("admin/listphoto", { data: data });
+
+    }).catch(function (err) {
+        res.render("admin/listphoto", { data: { error: "Get Post data is Error" } });
+    });
+
+    }else{
+        res.redirect("/admin/signinadmin");
+    }
+
+    
+}
 //--------------update user
 
 exports.user=function(req,res){
@@ -172,7 +204,7 @@ exports.signinadmin_=function(req,res){
                 if(params.password == admin.pass)
                 {
                     req.session.admin=admin;
-                    res.redirect("/admin/listuser");
+                    res.redirect("/admin/home");
                 }
                 else{
                     res.render("Admin/login",{data:{error:"Password Wrong"}});

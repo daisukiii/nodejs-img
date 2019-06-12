@@ -540,9 +540,11 @@ app.get("/test/:id", (req, res) => {
 //-----signup
 app.get("/admin/signinadmin", admin.signinadmin);
 app.post("/admin/signinadmin",admin.signinadmin_);
+app.get("/admin/home", admin.home);
 
 //---
-app.get("/admin/listuser", admin.listuser);           //1
+app.get("/admin/listuser", admin.listuser);     
+app.get("/admin/listphoto", admin.listphoto)      //1
 app.get("/admin/user/:id", admin.user);               //2
 app.put("/admin/user", admin.edituser);
 //app.delete("/admin/user/delete", admin.deleteuser);
