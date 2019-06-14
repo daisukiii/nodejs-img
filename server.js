@@ -225,7 +225,8 @@ app.get("/u/:id", async (req, res) => {
         console.log(result);
         username = result[0].username;
         id_username = result[0].id;
-        url_avatar = result[0].avatar_url;
+        url_avatar='uploads/';
+        url_avatar += result[0].avatar_url;
         db.query(
           "SELECT * FROM photos ORDER BY id DESC LIMIT 10",
           async function (err, result) {
@@ -268,6 +269,7 @@ app.get("/i/:id", async (req, res) => {
     if (err) throw err;
     title = result[0].title;
     img_description = result[0].images_description;
+    status_photo_any =result[0].status_photo_any;
     img_url += "uploads/";
     img_url += result[0].images_url;
     db.query("SELECT * FROM photos ORDER BY id DESC LIMIT 10", async function (
@@ -283,7 +285,7 @@ app.get("/i/:id", async (req, res) => {
         img_description: img_description,
         img_url: img_url,
         username_nav: username_nav,
-        status_photo: status_photo,
+        status_photo: status_photo_any,
         data: result
       });
     });
