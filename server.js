@@ -251,6 +251,17 @@ app.get("/u/:id", async (req, res) => {
 
 // ? after upload image whitout login
 app.get("/i/:id", async (req, res) => {
+  var id = req.params.id;
+  db.query(`SELECT * FROM photos_any WHERE id = ${id}`, async (err, result) => {
+    if (err) throw err;
+    if (result[0].status_photo_any == 2) {
+      var url = "../home-page";
+      res.render("push.ejs", {
+        data: id,
+        url: url
+      });
+    }
+  });
   var title = "",
     img_description = "",
     username = "Anonymous",
@@ -261,7 +272,7 @@ app.get("/i/:id", async (req, res) => {
   if (username_nav == null) {
     username_nav = "";
   }
-  var id = req.params.id;
+  
   db.query("SELECT * FROM photos_any WHERE id= " + id + "", async function (
     err,
     result
@@ -295,6 +306,16 @@ app.get("/i/:id", async (req, res) => {
 // ? profile user, show all image for user
 app.get("/p/:id", async (req, res) => {
   var id = req.params.id;
+  db.query(`SELECT * FROM users WHERE id = ${id}`, async (err, result) => {
+    if (err) throw err;
+    if (result[0].status_user == 1) {
+      var url = "/home";
+      res.render("userpush.ejs", {
+        data: id,
+        url: url
+      });
+    }
+  });
   var change_avatar = "";
   var username_show = "";
 
