@@ -756,6 +756,65 @@ app.get("/admin/listduyetphoto0/:id", async (req, res) => {
                   }
                 );
               }
+    )
+
+    app.get("/admin/listdeleteandanh/:id", async (req, res) => {
+      if(req.session.admin){
+        var id = req.params.id;
+      // ! just for debug
+      console.log(id);
+      res.render("admin/pushdeleteN.ejs", {
+        id: id
+      });
+    
+      }else{
+        res.redirect("/admin/signinadmin");
+        }
+      
+    });
+    
+    app.post("/admin/listdeleteandanh/:id", async (req, res) => {
+      var id = req.params.id;
+      
+      // ! just for debug
+      console.log(id);
+      await db.query(`UPDATE photos_any SET status_photo_any=2 WHERE id = ${id}`, async (err, result) => {    
+        if (err) throw err;
+        res.redirect("/admin/listphotoandanh");
+    
+                  }
+                );
+              }
+        );
+
+app.get("/admin/listduyetandanh/:id", async (req, res) => {
+      if(req.session.admin){
+        var id = req.params.id;
+      // ! just for debug
+      console.log(id);
+      res.render("admin/pushduyetN.ejs", {
+        id: id
+      });  
+    
+      }else{
+        res.redirect("/admin/signinadmin");
+        }
+      
+    });
+    
+    app.post("/admin/listduyetandanh/:id", async (req, res) => {
+      var id = req.params.id;
+      
+      // ! just for debug
+      console.log(id);
+      await db.query(`UPDATE photos_any SET status_photo_any=1 WHERE id = ${id}`, async (err, result) => {    
+        if (err) throw err;
+        res.redirect("/admin/listphotoandanh");
+    
+                  }
+                );
+              }
+    )
         
 
 
