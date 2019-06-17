@@ -105,7 +105,8 @@ function getAdminByEmail(email){
         var defer=q.defer();
         var query=db.query('SELECT * FROM admins WHERE ?',{email:email},function(err,result){
             if(err){
-                defer.reject(err);
+                defer.reject(err) ;               
+
             }else{
                 defer.resolve(result);
             }

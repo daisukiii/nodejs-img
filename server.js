@@ -564,6 +564,7 @@ app.get("/test/:id", (req, res) => {
 app.get("/admin/signinadmin", admin.signinadmin);
 app.post("/admin/signinadmin",admin.signinadmin_);
 app.get("/admin/home", admin.home);
+app.get("/admin/logout", admin.logout); // ? call for logout
 
 
 //---
@@ -755,7 +756,8 @@ app.get("/admin/listduyetphoto0/:id", async (req, res) => {
                   }
                 );
               }
-        );
+        
+
 
 
 
