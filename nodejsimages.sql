@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 29, 2019 lúc 01:27 PM
--- Phiên bản máy phục vụ: 10.1.35-MariaDB
--- Phiên bản PHP: 7.2.9
+-- Thời gian đã tạo: Th6 17, 2019 lúc 06:03 PM
+-- Phiên bản máy phục vụ: 10.1.40-MariaDB
+-- Phiên bản PHP: 7.3.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -35,6 +35,13 @@ CREATE TABLE `admins` (
   `pass` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Đang đổ dữ liệu cho bảng `admins`
+--
+
+INSERT INTO `admins` (`id`, `username`, `email`, `pass`) VALUES
+(1, 'admin', 'admin@gmail.com', 'admin');
+
 -- --------------------------------------------------------
 
 --
@@ -46,6 +53,13 @@ CREATE TABLE `deleteuser` (
   `email` varchar(50) NOT NULL,
   `deltime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Đang đổ dữ liệu cho bảng `deleteuser`
+--
+
+INSERT INTO `deleteuser` (`id`, `email`, `deltime`) VALUES
+(1, 'admin@admin.com', '2019-06-14 06:47:04');
 
 -- --------------------------------------------------------
 
@@ -67,7 +81,7 @@ CREATE TABLE `photos` (
 --
 
 INSERT INTO `photos` (`id`, `title`, `id_user`, `status_photo`, `images_description`, `images_url`) VALUES
-(1, 'Title test 1 ', 4, 0, 'hhahahahahahah', '3raw-1559111194407.jpg'),
+(1, 'Title test 1 ', 4, 1, 'hhahahahahahah', '3raw-1559111194407.jpg'),
 (2, 'Title test 2', 4, 0, 'mo ta ', '3raw-1559111854554.jpg'),
 (3, 'Title 3', 4, 0, 'mo ta 3', '3raw-1559121210406.jpg'),
 (4, 'tiue de 4', 4, 0, 'mo ta 4', '3raw-1559121548212.jpg'),
@@ -79,7 +93,14 @@ INSERT INTO `photos` (`id`, `title`, `id_user`, `status_photo`, `images_descript
 (10, ' Title 10', 4, 0, 'mo ta 10', '3raw-1559122447549.jpg'),
 (11, 'tieu de 10', 4, 0, 'mo ta 10', '3raw-1559122702368.jpg'),
 (12, 'tieu de 11', 4, 0, 'mo ta 11', '3raw-1559122721808.jpg'),
-(13, 'admin tw', 1, 0, 'mo ta admin', '3raw-1559124960638.jpg');
+(13, 'admin tw', 1, 2, 'mo ta admin', '3raw-1559124960638.jpg'),
+(14, 'tit 100', 4, 2, 'mo tatatat', '3raw-1559135441824.jpg'),
+(15, 'dsfdsfsdf', 4, 1, 'sdfsdfds', '3raw-1559135695270.jpg'),
+(16, 'show images', 4, 1, 'show true', '3raw-1559397788329.png'),
+(17, 'title 17 thay doi', 4, 1, 'mota 17 thay doi', '3raw-1559405879581.jpg'),
+(18, 'tieu de 18.1', 1, 2, 'mo ta 18.1', '3raw-1559446190657.jpg'),
+(19, 'number 19', 1, 2, 'mo ta 19', '3raw-1559446301704.jpg'),
+(20, 'tieu de thu 20', 1, 2, 'mo ta thu 20', '3raw-1559461100937.jpg');
 
 -- --------------------------------------------------------
 
@@ -105,7 +126,12 @@ INSERT INTO `photos_any` (`id`, `title`, `status_photo_any`, `images_url`, `imag
 (3, 'Title 6', 1, '3raw-1559121611322.jpg', 'mo ta 6'),
 (4, 'Title 6', 1, '3raw-1559121704635.jpg', 'mo ta 6'),
 (5, 'tieu de 8', 1, '3raw-1559121953922.jpg', 'mo ta 8'),
-(6, 'frist image', 1, '3raw-1559126273837.jpg', 'ok mo ta');
+(6, 'frist image', 1, '3raw-1559126273837.jpg', 'ok mo ta'),
+(7, 'erwerwewrewrewr', 2, '3raw-1559135669131.jpg', 'wererwerwerw'),
+(8, 'test vi', 1, '3raw-1559621827219.png', 'test vi'),
+(9, 'ok', 0, '3raw-1559621854205.jpg', 'ok'),
+(10, '00', 0, '3raw-1560495207278.jpg', 'po'),
+(11, 'o', 0, '3raw-1560496412796.jpeg', 'o');
 
 -- --------------------------------------------------------
 
@@ -141,11 +167,13 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `pass`, `status_user`, `point_user`, `avatar_url`) VALUES
-(1, 'hung', 'admin@admin.com', '1', 0, 0, NULL),
-(2, 'admin2', 'admin2@admin.com', '1', 0, 0, NULL),
+(1, 'hung', 'admin@admin.com', '1', 1, 0, NULL),
+(2, 'admin2-11', 'admin2@admin.com', '1', 0, 0, NULL),
 (3, 'admin3', 'admin3@admin.com', '1', 0, 0, NULL),
-(4, '16520479', 'onepiece.hung@outlook.com', '1', 0, 0, NULL),
-(5, 'ad_test', 'hungnguyenhuu@yandex.com', '1', 0, 0, NULL);
+(4, '16520479', 'onepiece.hung@outlook.com', '1', 0, 0, '3raw-1559451050662.jpg'),
+(5, 'ad_test', 'hungnguyenhuu@yandex.com', '1', 0, 0, NULL),
+(6, 'admin4', 'admin4@admin.com', '1', 0, 0, NULL),
+(7, 'hung', '111@gmail.com', '1111111', 0, 0, NULL);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -197,19 +225,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT cho bảng `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT cho bảng `deleteuser`
+--
+ALTER TABLE `deleteuser`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT cho bảng `photos`
 --
 ALTER TABLE `photos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT cho bảng `photos_any`
 --
 ALTER TABLE `photos_any`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT cho bảng `status_photos`
@@ -221,7 +255,7 @@ ALTER TABLE `status_photos`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
