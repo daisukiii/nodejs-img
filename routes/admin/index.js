@@ -186,6 +186,7 @@ exports.newuser_1=function(req,res)
 };
 
 //-----sign in
+// luu y defer tra ve ket qua la 1 chuoi xong dung admin.length kiểm tra
 exports.signinadmin=function(req,res){
     res.render("Admin/login",{data:{error:false}});
 };
@@ -198,19 +199,28 @@ exports.signinadmin_=function(req,res){
         var data=post_md.getAdminByEmail(params.email);
         if(data){
             data.then(function(admin){
-                var admin=admin[0];
-                console.log(params.password);
-                console.log(admin.pass);
-                if(params.password == admin.pass)
-                {
+                if(admin.length){
+                    var admin=admin[0];
+                
+                
+                    if(params.password == admin.pass)
+                    {
                     req.session.admin=admin;
                     res.redirect("/admin/home");
-                }
-                else{
-                    res.render("Admin/login",{data:{error:"Password Wrong"}});
-                }                
+                    }
+                    else{
+                    res.render("Admin/login",{data:{error:"Password Wrong"}});                  
+                    }  
 
-            });
+                }else{
+                    res.render("Admin/login",{data:{error:"Email not exists"}});
+
+                }                             
+                        
+
+                });              
+
+            
 
         }else{
             res.render("Admin/login",{data:{error:"Admin not exists"}});
@@ -228,6 +238,13 @@ exports.home=function(req,res)
         res.redirect("/admin/signinadmin");
     }
 }
+//logout
+//TODO: logout functionality
+exports.logout = function (req, res) {
+    req.session.destroy(function (err) {
+        res.redirect("/admin/signinadmin");
+    })
+};
 
 //listphoto---0
 exports.listphoto0 = function (req, res) {
