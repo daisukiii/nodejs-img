@@ -58,7 +58,7 @@ exports.signup = function (req, res) {
 };
 
 //TODO: login
-exports.login = function (req, res) {
+exports.login = async function (req, res) {
     var message = '';
 
     if (req.method == "POST") {
@@ -67,14 +67,24 @@ exports.login = function (req, res) {
         var pass = post.pass;
 
         var sql = "SELECT * FROM `users` WHERE `email`='" + email + "' and pass = '" + pass + "'";
-        db.query(sql, function (err, results) {
+
+        await db.query(sql, function (err, results) {
+            if (err) throw err;
             if (results.length) {
-                req.session.userId = results[0].id;
-                req.session.username = results[0].username;
-                //TODO: just for debug
-                console.log(results[0].id);
-                console.log(results[0].username);
-                res.redirect('home');
+                if (results[0].status_user == 1) {
+                    message = "User was deleted";
+                    res.render('login/index.ejs', {
+                        message: message
+                    });
+                }
+                else{
+                    req.session.userId = results[0].id;
+                    req.session.username = results[0].username;
+                    //TODO: just for debug
+                    console.log(results[0].id);
+                    console.log(results[0].username);
+                    res.redirect('home');
+                }
             } else {
                 message = 'Email or username not correct.';
                 res.render('login/index.ejs', {

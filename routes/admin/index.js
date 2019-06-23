@@ -19,8 +19,8 @@ exports.user=function(req,res){
 /// listuser
 var post_md = require("../models/post");
 exports.listuser = function (req, res) {
-
-    var data = post_md.getAllPosts();
+    if(req.session.admin){
+        var data = post_md.getAllPosts();
     data.then(function (posts) {
         var data = {
             posts: posts,
@@ -31,10 +31,51 @@ exports.listuser = function (req, res) {
     }).catch(function (err) {
         res.render("admin/listuser", { data: { error: "Get Post data is Error" } });
     });
+
+    }else{
+        res.redirect("/admin/signinadmin");
+    }
+
+    
+}
+//home
+exports.home = function(req, res) {
+    if(req.session.admin){
+
+        res.render("Admin/dashboard",{data:{error:false}});
+
+    }else{
+        res.redirect("/admin/signinadmin");
+    }
+}
+
+var post_md = require("../models/post");
+exports.listphoto = function (req, res) {
+    if(req.session.admin){
+        var data = post_md.getAllPhoto();
+    data.then(function (posts) {
+        var data = {
+            posts: posts,
+            error: false
+        };
+        res.render("admin/listphoto", { data: data });
+
+    }).catch(function (err) {
+        res.render("admin/listphoto", { data: { error: "Get Post data is Error" } });
+    });
+
+    }else{
+        res.redirect("/admin/signinadmin");
+    }
+
+    
 }
 //--------------update user
 
 exports.user=function(req,res){
+
+    if(req.session.admin){
+
     var params=req.params;
     var id=params.id;
     var data=post_md.getPostById(id);
@@ -60,23 +101,53 @@ exports.user=function(req,res){
         res.render("Admin/user",{data:data});
 
     }
+
+    }else{
+        res.redirect("/admin/signinadmin");
+    }
+
+    
+    
 };
 // status_code: http:500 loi, 200: thanhcong
 exports.edituser=function(req,res){
     var params=req.body;
     data=post_md.updatePost(params);
-    if(!data){
+    if(!data){        
         res.json({status_code:500});
     }else{
-        data.then(function(result){
-            res.json({status_code:200});
+        data.then(function(result){            
+            res.json({status_code:200});            
         }).catch(function(err){
             res.json({status_code:500});
         });
-    }
+    }    
 };
+
+exports.listdeleteuser = function (req, res) {
+
+    if(req.session.admin){
+        var data = post_md.getAllDeletePosts();
+    data.then(function (posts) {
+        var data = {
+            posts: posts,
+            error: false
+        };
+        res.render("admin/listdeleteuser", { data: data });
+
+    }).catch(function (err) {
+        res.render("admin/listdeleteuser", { data: { error: "Get Post data is Error" } });
+    });
+
+    }else{
+        res.redirect("/admin/signinadmin");
+    }    
+}
+
+
+
 //deleteuser
-exports.deleteuser=function(req,res){
+/*exports.deleteuser=function(req,res){
     var post_id=req.body.id;
     var data=post_md.deletePost(post_id);
     if(!data){
@@ -88,14 +159,21 @@ exports.deleteuser=function(req,res){
             res.json({status_code:500});
         });
     }
-};
+};*/
 //them user
 exports.newuser=function(req,res){
-    res.render("Admin/newuser",{data:{error:false}});
+    if(req.session.admin){
+        res.render("Admin/newuser",{data:{error:false}});
+    }else{
+        res.redirect("/admin/signinadmin");
+    }
+   
 }
 exports.newuser_1=function(req,res)
 {
-    var params=req.body;    
+    var params=req.body;   
+    
+    
 
         var data=post_md.addPost(params);
         data.then(function(result){
@@ -106,5 +184,150 @@ exports.newuser_1=function(req,res)
 
     });
 };
+
+//-----sign in
+// luu y defer tra ve ket qua la 1 chuoi xong dung admin.length kiểm tra
+exports.signinadmin=function(req,res){
+    res.render("Admin/login",{data:{error:false}});
+};
+exports.signinadmin_=function(req,res){
+    var params=req.body;
+    if(params.email.trim().length == 0){
+        res.render("Admin/login",{data:{error:"Nhập email nhé bạn"}});
+    }else
+    {
+        var data=post_md.getAdminByEmail(params.email);
+        if(data){
+            data.then(function(admin){
+                if(admin.length){
+                    var admin=admin[0];
+                
+                
+                    if(params.password == admin.pass)
+                    {
+                    req.session.admin=admin;
+                    res.redirect("/admin/home");
+                    }
+                    else{
+                    res.render("Admin/login",{data:{error:"Password Wrong"}});                  
+                    }  
+
+                }else{
+                    res.render("Admin/login",{data:{error:"Email not exists"}});
+
+                }                             
+                        
+
+                });              
+
+            
+
+        }else{
+            res.render("Admin/login",{data:{error:"Admin not exists"}});
+        }
+
+
+    }
+};
+//tro ve HOME
+exports.home=function(req,res)
+{
+    if(req.session.admin){
+        res.render("Admin/dashboard",{data:{error:false}});
+    }else{
+        res.redirect("/admin/signinadmin");
+    }
+}
+//logout
+//TODO: logout functionality
+exports.logout = function (req, res) {
+    req.session.destroy(function (err) {
+        res.redirect("/admin/signinadmin");
+    })
+};
+
+//listphoto---0
+exports.listphoto0 = function (req, res) {
+    if(req.session.admin){
+        var data = post_md.getAllPhoto0();
+    data.then(function (posts) {
+        var data = {
+            posts: posts,
+            error: false
+        };
+        res.render("admin/listphoto-0", { data: data });
+
+    }).catch(function (err) {
+        res.render("admin/listphoto-0", { data: { error: "Get Post data is Error" } });
+    });
+
+    }else{
+        res.redirect("/admin/signinadmin");
+    }
+    
+}
+//listphoto---1
+exports.listphoto1 = function (req, res) {
+    if(req.session.admin){
+        var data = post_md.getAllPhoto1();
+    data.then(function (posts) {
+        var data = {
+            posts: posts,
+            error: false
+        };
+        res.render("admin/listphoto-1", { data: data });
+
+    }).catch(function (err) {
+        res.render("admin/listphoto-1", { data: { error: "Get Post data is Error" } });
+    });
+
+    }else{
+        res.redirect("/admin/signinadmin");
+    }
+    
+}
+////listphoto---2
+exports.listphoto2 = function (req, res) {
+    if(req.session.admin){
+        var data = post_md.getAllPhoto2();
+    data.then(function (posts) {
+        var data = {
+            posts: posts,
+            error: false
+        };
+        res.render("admin/listphoto-2", { data: data });
+
+    }).catch(function (err) {
+        res.render("admin/listphoto-2", { data: { error: "Get Post data is Error" } });
+    });
+
+    }else{
+        res.redirect("/admin/signinadmin");
+    }
+    
+}
+//listphotoandanh
+exports.listphotoandanh = function (req, res) {
+    if(req.session.admin){
+        var data = post_md.getAllPhotoandanh();
+    data.then(function (posts) {
+        var data = {
+            posts: posts,
+            error: false
+        };
+        res.render("admin/listphoto-andanh", { data: data });
+
+    }).catch(function (err) {
+        res.render("admin/listphoto-andanh", { data: { error: "Get Post data is Error" } });
+    });
+
+    }else{
+        res.redirect("/admin/signinadmin");
+    }
+    
+}
+
+
+
     
 

@@ -5,7 +5,7 @@
 	<link rel="icon" type="image/png" href="assets/img/favicon.ico">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>Danh sách User</title>
+	<title>Light Bootstrap Dashboard by Creative Tim</title>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -29,10 +29,35 @@
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+    <!--      csss           -->
+    <link rel="stylesheet" type="text/css" href="/static/admin/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/admin/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/admin/demo.css">
+    <link rel="stylesheet" type="text/css" href="/static/admin/light-bootstrap-dashboard.css">
+    <link rel="stylesheet" type="text/css" href="/static/admin/pe-icon-7-stroke.css">
+     <!--      js           -->
+
+
+    <script type="text/javascript" src="/static/admin/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/admin/bootstrap-notify.js"></script>
+    <script type="text/javascript" src="/static/admin/bootstrap-select.js"></script>
+    <script type="text/javascript" src="/static/admin/chartist.min.js"></script>
+    <script type="text/javascript" src="/static/admin/demo.js"></script>
+    <script type="text/javascript" src="/static/admin/jquery.3.2.1.min.js"></script>
+    <script type="text/javascript" src="/static/admin/light-bootstrap-dashboard.js"></script>
+    <script type="text/javascript" src="/static/admin/post.js"></script>
+
+
+
+
+
+
+
+
 </head>
 <body>
 
-<div class="wrapper">
+    <div class="wrapper">
     <div class="sidebar" data-color="purple" data-image="assets/img/sidebar-5.jpg">
 
     <!--   you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple" -->
@@ -47,47 +72,23 @@
 
         <ul class="nav">
             <li >
-                <a href="dashboard.html">
+                <a href="/admin/home">
                     <i class="pe-7s-graph"></i>
                     <p>Dashboard</p>
                 </a>
             </li>
-            <li>
-                <a href="user.html">
-                    <i class="pe-7s-user"></i>
-                    <p>Thông tin người dùng</p>
-                </a>
-            </li>
-            <li class="active">
-                <a href="listuser.html">
+            <li >
+                <a href="/admin/listuser">
                     <i class="pe-7s-note2"></i>
                     <p>Danh sách người dùng</p>
                 </a>
             </li>
-            <li>
-                <a href="admin.html">
-                    <i class="pe-7s-user"></i>
-                    <p>Thông tin Admin</p>
-                </a>
-            </li>
-            <li>
-                    <a href="listPHOTO.html">
+            <li class="active">
+                    <a href="/admin/listphoto1">
                         <i class="pe-7s-note2"></i>
                         <p>Danh sách Ảnh</p>
                     </a>
                 </li>
-            <li>
-                <a href="thongbao.html">
-                    <i class="pe-7s-bell"></i>
-                    <p>Thông báo</p>
-                </a>
-            </li>
-            <li class="active-pro">
-                <a href="upgrade.html">
-                    <i class="pe-7s-rocket"></i>
-                    <p>Upgrade to PRO</p>
-                </a>
-            </li>
         </ul>
     </div>
 </div>
@@ -162,7 +163,7 @@
                           </ul>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="/admin/logout">
                             <p>Đăng xuất</p>
                         </a>
                     </li>
@@ -175,15 +176,46 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
+                    <div class="conl-md-12">
+                        <a href="/admin/listphoto2" class="btn btn-success pull-right">DANH SÁCH PHOTO ĐÃ XÓA</a>
+                    
+
+                    </div>
+
+                </div>
+                <br>
+
+                <div class="row">
+                    <div class="conl-md-12">
+                        <a href="/admin/listphoto0" class="btn btn-success pull-right">DANH SÁCH PHOTO CHƯA DUYỆT</a>
+                    
+
+                    </div>
+
+                </div>
+
+                <br>
+                <div class="row">
+                    <div class="conl-md-12">
+                        <a href="/admin/listphotoandanh" class="btn btn-success pull-right">DANH SÁCH PHOTO Ẩn Danh</a>
+                    
+
+                    </div>
+
+                </div>
+                <br>
+                
+
+                <div class="row">
                     <div class="col-md-12">
                         <div class="card">
                             <div class="header">
                                 <div class="col-md-8">
-                                    <h4 class="title">Danh sách người dùng đã đăng kí</h4>
+                                    <h4 class="title">DANH SÁCH PHOTO ĐÃ DUYỆT</h4>
                                     <p class="category">Cập nhật 3 phút trước</p>
                                     </div>
                                     <div class="col-md-4">                                                         
-                                <p><input type="text"</input>
+                                <p><input type="text"></input>
                                 <button type="submit" class="btn btn-info btn-fill">Tìm kiếm</button>
                                 </p>
                                 </div>
@@ -191,48 +223,44 @@
                             <div class="content table-responsive table-full-width">
                                 <table class="table table-hover table-striped">
                                     <thead>
-                                        <th>ID</th>
-                                    	<th>Họ</th>
-                                    	<th>Tên</th>
-                                        <th>Email</th>
-                                        <th>Tài khoản</th>
-                                        <th>Mật khẩu</th>
-                                        <th>...</th>
+                                        <th>ID</th>                                       
+                                    	
+                                    	<th>Title</th>
+                                        <th>Id_user</th>
+                                        <th>status_photo</th>
+                                        <th>Images_description</th>
+                                        <th>Images_url</th>
+                                                                               
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                        	<td>1</td>
-                                        	<td>Nguyễn</td>
-                                        	<td>Bảo Thanh</td>
-                                            <td>baobao@gmail.com</td>
-                                            <td>bao123</td>
-                                            <td>hihi</td>
-                                            <td><a href="user.html">Sửa/Xóa</a></td>
-                                        </tr>
-                                        <tr>
-                                        	<td>2</td>
-                                        	<td>Nguyễn</td>
-                                        	<td>Hưng Hữu</td>
-                                            <td>hunghunghuu@gmail.com</td>
-                                            <td>hung123</td>
-                                            <td>hihi</td>
-                                            <td><a href="user.html">Sửa/Xóa</a></td>
-                                        </tr>
-                                        <tr>
-                                        	<td>3</td>
-                                        	<td>Nguyễn</td>
-                                        	<td>Hưng Đức</td>
-                                            <td>hunghungduc@gmail.com</td>
-                                            <td>hung0123</td>
-                                        </tr>
-                                        <tr>
-                                        	<td>4</td>
-                                        	<td>Ngô</td>
-                                        	<td>Vỷ Quang</td>
-                                            <td>vyvyquang@gmail.com</td>
-                                            <td>vy123</td>
-                                        </tr>
+                                       
+                                        <% if(data && data.posts){%>
+                                            <% for(var i=0;i< data.posts.length;i++){%>
+                                            <tr>
+                                                
+                                                
+                                                <td><%= data.posts[i].id %></td>
+                                                <td><%= data.posts[i].title %></td>
+                                                <td><%= data.posts[i].id_user %></td>
+                                                <td><%= data.posts[i].status_photo %></td>
+                                                <td><%= data.posts[i].images_description %></td>
+                                                <td><img src="../uploads/<%= data.posts[i].images_url %>"" style="width:250px;height:150px; object-fit: cover; "></td> 
+                                                <td>
+                                                    
+                                                    <a href="/admin/listdeletephoto1/<%=data.posts[i].id %>" class="btn btn-danger">
+                                                        Xóa </a>
+                                                    
+                                                </td>
+                                            </tr>
+                                            <%}%>
+                                            
+                                        <%}%>
+                                                                               
+
+                                        
+
                                     </tbody>
+                                    
                                 </table>
 
                             </div>
@@ -269,8 +297,8 @@
                     </ul>
                 </nav>
                 <p class="copyright pull-right">
-                        &copy; <script>document.write(new Date().getFullYear())</script> <a href=""></a>Captain America</a>, Đội trưởng Mỹ
-                    </p>
+                    &copy; <script>document.write(new Date().getFullYear())</script> <a href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
+                </p>
             </div>
         </footer>
 
