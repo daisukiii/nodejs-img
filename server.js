@@ -50,6 +50,7 @@ app.use("/c", express.static(path.join(__dirname, "public"))); // ! change passw
 app.use("/edit", express.static(path.join(__dirname, "public"))); // ! edit image
 app.use("/delete", express.static(path.join(__dirname, "public"))); // ! delete image
 app.use("/ca", express.static(path.join(__dirname, "public"))); // ! change avatar user
+app.use("/search", express.static(path.join(__dirname, "public"))); // ! change avatar user
 app.use("/static", express.static(path.join(__dirname, "public")));
 app.use("/admin", express.static(path.join(__dirname, "public")));
 app.use(
@@ -114,6 +115,10 @@ app.get("/home/logout", user.logout); // ? call for logout
 app.get("/home", user.home); // ? call for login
 app.get("/home-page", user.homenotlogin); // ? call for without login
 app.get("/upload", user.upload); // ? call for page upload
+app.get("/search", user.search); // ? call for search
+app.post("/search", user.search); // ? call for search
+
+
 
 // ? call for upload image
 app.post("/upload", (req, res) => {
