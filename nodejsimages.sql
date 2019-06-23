@@ -2,10 +2,10 @@
 -- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th6 17, 2019 lúc 06:03 PM
--- Phiên bản máy phục vụ: 10.1.40-MariaDB
--- Phiên bản PHP: 7.3.5
+-- Host: 127.0.0.1
+-- Generation Time: Jun 23, 2019 at 02:55 PM
+-- Server version: 10.1.40-MariaDB
+-- PHP Version: 7.3.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,13 +19,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `nodejsimages`
+-- Database: `nodejsimages`
 --
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `admins`
+-- Table structure for table `admins`
 --
 
 CREATE TABLE `admins` (
@@ -36,7 +36,7 @@ CREATE TABLE `admins` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Đang đổ dữ liệu cho bảng `admins`
+-- Dumping data for table `admins`
 --
 
 INSERT INTO `admins` (`id`, `username`, `email`, `pass`) VALUES
@@ -45,7 +45,7 @@ INSERT INTO `admins` (`id`, `username`, `email`, `pass`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `deleteuser`
+-- Table structure for table `deleteuser`
 --
 
 CREATE TABLE `deleteuser` (
@@ -55,7 +55,7 @@ CREATE TABLE `deleteuser` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Đang đổ dữ liệu cho bảng `deleteuser`
+-- Dumping data for table `deleteuser`
 --
 
 INSERT INTO `deleteuser` (`id`, `email`, `deltime`) VALUES
@@ -64,7 +64,7 @@ INSERT INTO `deleteuser` (`id`, `email`, `deltime`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `photos`
+-- Table structure for table `photos`
 --
 
 CREATE TABLE `photos` (
@@ -77,7 +77,7 @@ CREATE TABLE `photos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Đang đổ dữ liệu cho bảng `photos`
+-- Dumping data for table `photos`
 --
 
 INSERT INTO `photos` (`id`, `title`, `id_user`, `status_photo`, `images_description`, `images_url`) VALUES
@@ -93,19 +93,19 @@ INSERT INTO `photos` (`id`, `title`, `id_user`, `status_photo`, `images_descript
 (10, ' Title 10', 4, 0, 'mo ta 10', '3raw-1559122447549.jpg'),
 (11, 'tieu de 10', 4, 0, 'mo ta 10', '3raw-1559122702368.jpg'),
 (12, 'tieu de 11', 4, 0, 'mo ta 11', '3raw-1559122721808.jpg'),
-(13, 'admin tw', 1, 2, 'mo ta admin', '3raw-1559124960638.jpg'),
+(13, 'admin tw', 1, 1, 'mo ta admin', '3raw-1559124960638.jpg'),
 (14, 'tit 100', 4, 2, 'mo tatatat', '3raw-1559135441824.jpg'),
 (15, 'dsfdsfsdf', 4, 1, 'sdfsdfds', '3raw-1559135695270.jpg'),
 (16, 'show images', 4, 1, 'show true', '3raw-1559397788329.png'),
 (17, 'title 17 thay doi', 4, 1, 'mota 17 thay doi', '3raw-1559405879581.jpg'),
-(18, 'tieu de 18.1', 1, 2, 'mo ta 18.1', '3raw-1559446190657.jpg'),
-(19, 'number 19', 1, 2, 'mo ta 19', '3raw-1559446301704.jpg'),
-(20, 'tieu de thu 20', 1, 2, 'mo ta thu 20', '3raw-1559461100937.jpg');
+(18, 'tieu de 18.1', 1, 1, 'mo ta 18.1', '3raw-1559446190657.jpg'),
+(19, 'number 19', 1, 1, 'mo ta 19', '3raw-1559446301704.jpg'),
+(20, 'tieu de thu 20', 1, 1, 'mo ta thu 20', '3raw-1559461100937.jpg');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `photos_any`
+-- Table structure for table `photos_any`
 --
 
 CREATE TABLE `photos_any` (
@@ -117,7 +117,7 @@ CREATE TABLE `photos_any` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Đang đổ dữ liệu cho bảng `photos_any`
+-- Dumping data for table `photos_any`
 --
 
 INSERT INTO `photos_any` (`id`, `title`, `status_photo_any`, `images_url`, `images_description`) VALUES
@@ -136,7 +136,7 @@ INSERT INTO `photos_any` (`id`, `title`, `status_photo_any`, `images_url`, `imag
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `status_photos`
+-- Table structure for table `status_photos`
 --
 
 CREATE TABLE `status_photos` (
@@ -149,7 +149,7 @@ CREATE TABLE `status_photos` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -163,11 +163,11 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Đang đổ dữ liệu cho bảng `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `pass`, `status_user`, `point_user`, `avatar_url`) VALUES
-(1, 'hung', 'admin@admin.com', '1', 1, 0, NULL),
+(1, 'hung', 'admin@admin.com', '1', 0, 0, '3raw-1561294258176.jpg'),
 (2, 'admin2-11', 'admin2@admin.com', '1', 0, 0, NULL),
 (3, 'admin3', 'admin3@admin.com', '1', 0, 0, NULL),
 (4, '16520479', 'onepiece.hung@outlook.com', '1', 0, 0, '3raw-1559451050662.jpg'),
@@ -176,99 +176,99 @@ INSERT INTO `users` (`id`, `username`, `email`, `pass`, `status_user`, `point_us
 (7, 'hung', '111@gmail.com', '1111111', 0, 0, NULL);
 
 --
--- Chỉ mục cho các bảng đã đổ
+-- Indexes for dumped tables
 --
 
 --
--- Chỉ mục cho bảng `admins`
+-- Indexes for table `admins`
 --
 ALTER TABLE `admins`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `deleteuser`
+-- Indexes for table `deleteuser`
 --
 ALTER TABLE `deleteuser`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `photos`
+-- Indexes for table `photos`
 --
 ALTER TABLE `photos`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_user` (`id_user`);
 
 --
--- Chỉ mục cho bảng `photos_any`
+-- Indexes for table `photos_any`
 --
 ALTER TABLE `photos_any`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `status_photos`
+-- Indexes for table `status_photos`
 --
 ALTER TABLE `status_photos`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_photo` (`id_photo`);
 
 --
--- Chỉ mục cho bảng `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT cho các bảng đã đổ
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT cho bảng `admins`
+-- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT cho bảng `deleteuser`
+-- AUTO_INCREMENT for table `deleteuser`
 --
 ALTER TABLE `deleteuser`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT cho bảng `photos`
+-- AUTO_INCREMENT for table `photos`
 --
 ALTER TABLE `photos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
--- AUTO_INCREMENT cho bảng `photos_any`
+-- AUTO_INCREMENT for table `photos_any`
 --
 ALTER TABLE `photos_any`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT cho bảng `status_photos`
+-- AUTO_INCREMENT for table `status_photos`
 --
 ALTER TABLE `status_photos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- Các ràng buộc cho các bảng đã đổ
+-- Constraints for dumped tables
 --
 
 --
--- Các ràng buộc cho bảng `photos`
+-- Constraints for table `photos`
 --
 ALTER TABLE `photos`
   ADD CONSTRAINT `photos_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`);
 
 --
--- Các ràng buộc cho bảng `status_photos`
+-- Constraints for table `status_photos`
 --
 ALTER TABLE `status_photos`
   ADD CONSTRAINT `status_photos_ibfk_1` FOREIGN KEY (`id_photo`) REFERENCES `photos` (`id`);

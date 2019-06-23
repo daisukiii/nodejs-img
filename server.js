@@ -225,8 +225,8 @@ app.get("/u/:id", async (req, res) => {
         console.log(result);
         username = result[0].username;
         id_username = result[0].id;
-        url_avatar='uploads/';
-        url_avatar += result[0].avatar_url;
+        //url_avatar='uploads/';
+        url_avatar = result[0].avatar_url;
         db.query(
           "SELECT * FROM photos ORDER BY id DESC LIMIT 10",
           async function (err, result) {
