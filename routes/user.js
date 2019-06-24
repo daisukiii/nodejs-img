@@ -137,6 +137,22 @@ exports.home = async function (req, res) {
     }
 };
 
+exports.search = async function (req, res) {
+    var username = req.session.username;
+    if (req.method == "POST") {
+        var post = req.body;
+        var search = post.search;
+        db.query(`SELECT * FROM photos WHERE title LIKE "${search}%" OR images_description LIKE "${search}%" ORDER BY id DESC`, async (err, result) => {
+            if (err) throw err;
+            res.render('home/search.ejs', {
+                data: username,
+                owl: search,
+                content: result
+            });
+        });
+    }
+};
+
 // TODO: without login
 exports.homenotlogin = function (req, res) {
     var  username = '';

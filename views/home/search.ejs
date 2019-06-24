@@ -26,10 +26,10 @@
     <!-- /#sidebar-wrapper -->
     <!--TODO: This navigation-->
     <nav class="navbar navbar-expand-lg Linear-Gradient-nav fixed-top fix-z-1">
-
-        <img class="ds-hover-icon rounded navbar-brand ml-4" src="images/list.png" id="menu-toggle-both"
-            style="width:22px;height:auto;">
-        <a class="navbar-brand ds-hover nav-link" href="#">
+        <div class="container">
+        <!-- <img class="ds-hover-icon rounded navbar-brand ml-4" src="images/list.png" id="menu-toggle-both"
+            style="width:22px;height:auto;"> -->
+        <a class="navbar-brand ds-hover nav-link" href="../">
             <img src="images/7.png" width="20" height="auto" alt="logo">
             3RAW
         </a>
@@ -72,26 +72,11 @@
 
             </ul>
         </div>
+    </div>
     </nav>
     <!--TODO:This Header-->
     <header>
-        <div class="owl-carousel owl-theme owl-loaded owl-fix">
-            <div class="owl-stage-outer">
-                <div class="owl-stage">
-                    <% if(owl.length>0){ %>
-                    <% for(var i=0;i< 10;i++){%>
-                    <div class="owl-item">
-                        <a href="/u/<%= owl[i].id %>">
-                            <img class="ds-owl-box img-thumbnail" src="/uploads/<%= owl[i].images_url %>"
-                                alt="<%= owl[i].images_description %>" srcset="">
-                        </a>
-                    </div>
-                    <% } %>
-                    <% } %>
-                </div>
-            </div>
-        </div>
-        </div>
+      
     </header>
 
     <!--TODO:Content-->
@@ -99,10 +84,11 @@
     <section class="gallery-block grid-gallery">
         <div class="row">
             <div class="container">
+                <div class="text-white pt-4 p-3 h2">Search: "<%= owl %>"</div>
                 <div class="row">
                     <% if(content.length>0){ %>
                     <% for(var i=0;i< content.length;i++){%>
-                    <% if(content[i].status_photo == 1){ %>
+                    
                     <div class="col-md-12 col-lg-4 item">
                         <div class="card ds-card">
 
@@ -113,13 +99,20 @@
                             <div class="card-body">
                                 <h5 class="card-title pt-2">Title: <%= content[i].title %></h5>
                                 <p class="card-text">Description: <%= content[i].images_description %></p>
+                                <% if(content[i].status_photo == 1){ %>
                                 <p class="card-text">Verify by Admin <img src="images/check-mark.png" alt="" srcset="">
                                     Upload by ID#<%= content[i].id_user %> <img src="images/upload.png" alt=""
                                         srcset=""></p>
+                                <% } %>
+                                <% if(content[i].status_photo == 0){ %>
+                                    <p class="card-text">Verify by Admin <img src="images/delete.png" alt="" srcset="">
+                                        Upload by ID#<%= content[i].id_user %> <img src="images/upload.png" alt=""
+                                            srcset=""></p>
+                                <% } %>
                             </div>
                         </div>
                     </div>
-                    <% } %>
+                    
                     <% } %>
                     <% } %>
                 </div>
