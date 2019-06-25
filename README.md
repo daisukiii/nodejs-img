@@ -47,12 +47,12 @@ var connection = mysql.createConnection({
 });
 ```
 
-```npm
-npm install
+```git
+$ npm install
 ```
 
-```npm
-npm start
+```git
+$ npm start
 ```
 
 ## Done
