@@ -73,12 +73,12 @@
             <div class="col-md-8 col-sm-12 mx-auto">
                 <div class="card transform-on-hover w-100">
                     <div class="card-header bg-transparent">
-                        <% if(url_avatar == null){ %>
-                            <img class="box-icon float-left" src="images/user.jpg" alt="" sizes="" srcset="">
-                            
+                        <% if (url_avatar == null){ %>  
+                            <img class="box-icon float-left" src="images/user.jpg" alt="" sizes="" srcset=""> 
                         <% } else{ %>
                             <img class="box-icon float-left" src="uploads/<%= url_avatar %>" alt="" sizes="" srcset="">
-                        <% } %>
+                        <% } %>  
+                      
                         <a class="d-inline-flex p-2 ds-username-title" href="/p/<%= id_username %>"><%= username %></a>
                         <img class="d-inline-flex float-right p-2" src="images/more.png" alt="" srcset=""
                             data-toggle="modal" data-target="#viewMore">

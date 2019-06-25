@@ -269,7 +269,7 @@ app.get("/i/:id", async (req, res) => {
     img_description = "",
     username = "Anonymous",
     img_url = "",
-    url_avatar = "images/user.jpg",
+    url_avatar = null,
     id_username = "../home-page";
   var username_nav = req.session.username;
   if (username_nav == null) {
