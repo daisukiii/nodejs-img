@@ -69,7 +69,7 @@ Account for test:
     │     └── Password: 1
     ├── User (See in database)
     └── User admin/ => (yourdomain.com/admin)
-          ├── ID: admin@admin.com
+          ├── ID: admin@gmail.com
           └── Password: admin
 ```
 
