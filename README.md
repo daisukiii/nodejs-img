@@ -76,7 +76,7 @@ Account for test:
 ## Demo
 
 //<iframe src="https://drive.google.com/file/d/1fRNA_DRubaMPRZCuO6m5JBv4CoCnkhc6/preview" width="100%" height="auto"></iframe>
-//[![asciicast](https://asciinema.org/a/113463.png)](https://drive.google.com/file/d/1fRNA_DRubaMPRZCuO6m5JBv4CoCnkhc6/preview)
+//[![asciicast](https://i.imgur.com/Kq0NZlo.png)](https://drive.google.com/file/d/1fRNA_DRubaMPRZCuO6m5JBv4CoCnkhc6/preview)
 
 [![IMAGE ALT TEXT HERE](https://i.imgur.com/Kq0NZlo.png)](https://drive.google.com/file/d/1fRNA_DRubaMPRZCuO6m5JBv4CoCnkhc6/preview)
 
