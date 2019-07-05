@@ -3,7 +3,8 @@ var express = require("express"),
   routes = require("./routes/index"),
   admin = require("./routes/admin/index"),
   multer = require("multer"),
-  path = require("path");
+  path = require("path"),
+  http = require('http');
 
 var session = require("express-session");
 var app = express();
@@ -12,6 +13,8 @@ var mysql = require("mysql");
 var ejsEngine = require("ejs-locals");
 app.engine("ejs", ejsEngine);
 app.set("view engine", "ejs");
+var server = http.createServer(app);
+var io = require('socket.io').listen(server);
 // ! global
 
 var hostname = "localhost";
@@ -117,6 +120,7 @@ app.get("/home-page", user.homenotlogin); // ? call for without login
 app.get("/upload", user.upload); // ? call for page upload
 app.get("/search", user.search); // ? call for search
 app.post("/search", user.search); // ? call for search
+app.get("/messenger",user.messager);// ? call for message page
 
 // ? call for upload image
 app.post("/upload", (req, res) => {
@@ -809,6 +813,50 @@ app.post("/admin/listduyetandanh/:id", async (req, res) => {
   );
 });
 
-app.listen(`${port}`, () => {
+var onlineUsers=[];
+io.on('connection', function(socket) {
+
+     console.log('a user connected');
+
+  socket.on('user name', function(user, callback) {
+      var temp = 0;
+      onlineUsers.push({
+          profileName: user,
+          profileId: socket.id,
+          counter: temp
+      })
+
+      // console.log(userName);
+      console.log(onlineUsers);
+
+      io.sockets.emit('connectedUsers', onlineUsers);
+
+  });
+
+  socket.on('disconnect', function() {
+      var i = 0;
+      while (i < onlineUsers.length) {
+          if (onlineUsers[i].profileId == socket.id) {
+              break;
+          }
+          i++;
+      }
+      console.log(socket.id + 'disconnect');
+
+      onlineUsers.splice(i, 1);
+      io.sockets.emit('connectedUsers', onlineUsers);
+      console.log('user disconnected');
+  });
+
+  socket.on('chatting', function(message, sender, receiver) {
+
+      socket.to(receiver).emit('reciverPeer', message, socket.id, receiver);
+      socket.emit('senderPeer', message, socket.id, receiver);
+  })
+
+});
+// finish socket io 
+
+server.listen(`${port}`, () => {
   console.log(`App running in http://${hostname}:${port}`);
 });
