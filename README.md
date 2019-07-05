@@ -47,12 +47,12 @@ var connection = mysql.createConnection({
 });
 ```
 
-```git
-$ npm install
+```npm
+npm install
 ```
 
-```git
-$ npm start
+```npm
+npm start
 ```
 
 ## Done
@@ -86,6 +86,7 @@ root/
       ├── Login
       └── Regsiter
 ```
+####  by <a href="https://github.com/onepiecehung">@onepiecehung</a>, <a href="https://github.com/ds112">@ds112</a>
 
 ```python
 User not login/
@@ -94,9 +95,10 @@ User not login/
       ├── Comments (login with FB, GG, TW, etc.)
       └── Share (FB, TW, etc )
 ```
+####  by <a href="https://github.com/onepiecehung">@onepiecehung</a>, <a href="https://github.com/ds112">@ds112</a>
 
 ```python
-User login/
+User login/ 
 └── User normal/
     ├── image/
     │   ├── Reaction
@@ -111,11 +113,12 @@ User login/
         ├── Change avatar
         ├── Photo library
         ├── Photo management
-        └── Mesenage - (It is not in barch "master", See it in barch "chat")
+        └── Mesenage - (It is not in barch "master", See it in barch "chat") only by @baptiensinh
 ```
+#### by <a href="https://github.com/onepiecehung">@onepiecehung</a>, <a href="https://github.com/ds112">@ds112</a>
 
 ```javascript
-User login/
+User login/ 
 └── User admin/
     ├── image/
     │   ├── Photo management
@@ -139,6 +142,8 @@ User login/
         ├── Total images verify without login 
         └── Total images pending verify without login 
 ```
+#### by <a href="https://github.com/kaitouhung">@kaitouhung</a>, <a href="https://github.com/nganngongongan">@nganngongongan</a>
+
 
 # Image example
 
