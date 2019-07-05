@@ -80,12 +80,14 @@
                 <div class="owl-stage">
                     <% if(owl.length>0){ %>
                     <% for(var i=0;i< 10;i++){%>
+                    <% if(owl[i].status_photo < 2){ %>
                     <div class="owl-item">
                         <a href="/u/<%= owl[i].id %>">
                             <img class="ds-owl-box img-thumbnail" src="/uploads/<%= owl[i].images_url %>"
                                 alt="<%= owl[i].images_description %>" srcset="">
                         </a>
                     </div>
+                    <% } %>
                     <% } %>
                     <% } %>
                 </div>
